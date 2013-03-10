@@ -1,0 +1,22 @@
+/******************************************************************
+Site Name: Urban Tactical Supplies
+Author: Michael Varrieur
+
+Stylesheet: Main Stylesheet
+
+Here's where the magic happens. Here, you'll see we are calling in
+the separate media queries. The base mobile goes outside any query
+and is called at the beginning, after that we call the rest
+of the styles inside media queries.
+******************************************************************/
+
+
+//
+// IMPORTING STYLES
+//
+
+// import normalize
+@import "normalize";
+
+// import mixins
+@import "mixins";
