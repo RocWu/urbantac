@@ -29,7 +29,10 @@ if (!window.getComputedStyle) {
 
 // as the page loads, call these scripts
 jQuery(document).ready(function($) {
-
+    $('.flexslider').flexslider({
+        animation: "fade",
+        slideshowSpeed: 5000,
+      });
     /*
     Responsive jQuery is a tricky thing.
     There's a bunch of different ways to handle

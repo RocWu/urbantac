@@ -1,0 +1,84 @@
+.contact-details {
+  padding: 0 pxtoem(10px, $bodyFontSize);
+  float: left;
+
+  width: pxtoem(320px, $bodyFontSize);
+
+  .employee {
+    padding: pxtoem(10px, $bodyFontSize) 0;
+    border-top: 1px dashed $linkColor;
+
+    &:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    p {
+      margin: 0;
+
+      &.name {
+        font-size: 2em;
+      }
+
+      &.title {
+        font-style: italic;
+      }
+    }
+  }
+}
+
+.facebook-inset {
+  height: pxtoem(75px, $bodyFontSize);
+  text-align: center;
+  background-color: #5f5647;
+  @include border-radius(6px);
+  margin-top: pxtoem(10px, $bodyFontSize);
+
+  a {
+    color: $hoverLinkColor;
+    &:hover {
+      color: $linkColor;
+      text-decoration: none;
+    }
+  }
+
+  span {
+    font-size: 1.5em;
+    display:block;
+    margin: 0;
+    line-height: pxtoem(75px, 24px);
+
+    .icon-facebook-sign {
+      vertical-align: middle;
+      font-size: 2em;
+    }
+  }
+}
+
+.contact-map-container {
+  padding: 0 pxtoem(10px, $bodyFontSize);
+  float: left;
+  width: pxtoem(640px, $bodyFontSize);
+  
+  .phone {
+    font-size: 4em;
+    font-weight: 200;
+    text-shadow: 1px 1px 1px $linkColor;
+    margin: 0;
+  }
+
+  .address {
+    margin-top: 0;
+    font-size: 1.5em;
+    font-weight: 200;
+  }
+}
+
+.contact-map-wrap {
+  height: pxtoem(400px, $bodyFontSize);
+
+  #contact-map {
+    width: 100%;
+    height: 100%;
+  }
+}

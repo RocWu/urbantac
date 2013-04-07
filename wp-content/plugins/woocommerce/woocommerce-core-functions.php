@@ -682,8 +682,10 @@ function get_woocommerce_currencies() {
 				'HKD' => __( 'Hong Kong Dollar', 'woocommerce' ),
 				'HUF' => __( 'Hungarian Forint', 'woocommerce' ),
 				'IDR' => __( 'Indonesia Rupiah', 'woocommerce' ),
+				'INR' => __( 'Indian Rupee', 'woocommerce' ),
 				'ILS' => __( 'Israeli Shekel', 'woocommerce' ),
 				'JPY' => __( 'Japanese Yen', 'woocommerce' ),
+				'KRW' => __( 'South Korean Won', 'woocommerce' ),
 				'MYR' => __( 'Malaysian Ringgits', 'woocommerce' ),
 				'MXN' => __( 'Mexican Peso', 'woocommerce' ),
 				'NOK' => __( 'Norwegian Krone', 'woocommerce' ),
@@ -737,6 +739,7 @@ function get_woocommerce_currency_symbol( $currency = '' ) {
 		case 'JPY' :
 			$currency_symbol = '&yen;';
 			break;
+		case 'KRW' : $currency_symbol = '&#8361;'; break;
 		case 'TRY' : $currency_symbol = '&#84;&#76;'; break;
 		case 'NOK' : $currency_symbol = '&#107;&#114;'; break;
 		case 'ZAR' : $currency_symbol = '&#82;'; break;
@@ -745,6 +748,7 @@ function get_woocommerce_currency_symbol( $currency = '' ) {
 		case 'DKK' : $currency_symbol = '&#107;&#114;'; break;
 		case 'HUF' : $currency_symbol = '&#70;&#116;'; break;
 		case 'IDR' : $currency_symbol = 'Rp'; break;
+		case 'INR' : $currency_symbol = '&#8377;'; break;
 		case 'ILS' : $currency_symbol = '&#8362;'; break;
 		case 'PHP' : $currency_symbol = '&#8369;'; break;
 		case 'PLN' : $currency_symbol = '&#122;&#322;'; break;
@@ -776,14 +780,15 @@ function woocommerce_price( $price, $args = array() ) {
 		'ex_tax_label' 	=> '0'
 	), $args ) );
 
-	$return = '';
-	$num_decimals = (int) get_option( 'woocommerce_price_num_decimals' );
-	$currency_pos = get_option( 'woocommerce_currency_pos' );
+	$return          = '';
+	$num_decimals    = (int) get_option( 'woocommerce_price_num_decimals' );
+	$currency_pos    = get_option( 'woocommerce_currency_pos' );
 	$currency_symbol = get_woocommerce_currency_symbol();
+	$decimal_sep     = wp_specialchars_decode( stripslashes( get_option( 'woocommerce_price_decimal_sep' ) ), ENT_QUOTES );
+	$thousands_sep   = wp_specialchars_decode( stripslashes( get_option( 'woocommerce_price_thousand_sep' ) ), ENT_QUOTES );
 
-	$price = apply_filters( 'raw_woocommerce_price', (double) $price );
-
-	$price = number_format( $price, $num_decimals, stripslashes( get_option( 'woocommerce_price_decimal_sep' ) ), stripslashes( get_option( 'woocommerce_price_thousand_sep' ) ) );
+	$price           = apply_filters( 'raw_woocommerce_price', (double) $price );
+	$price           = number_format( $price, $num_decimals, $decimal_sep, $thousands_sep );
 
 	if ( get_option( 'woocommerce_price_trim_zeros' ) == 'yes' && $num_decimals > 0 )
 		$price = woocommerce_trim_zeros( $price );
@@ -949,8 +954,6 @@ function woocommerce_get_formatted_variation( $variation = '', $flat = false ) {
             	$term = get_term_by( 'slug', $value, esc_attr( str_replace( 'attribute_', '', $name ) ) );
             	if ( ! is_wp_error( $term ) && $term->name )
             		$value = $term->name;
-            } else {
-            	$value = ucfirst( $value );
             }
 
 			if ( $flat )
@@ -1898,35 +1901,45 @@ function woocommerce_init_roles() {
 
 		// Shop manager role
 		add_role( 'shop_manager', __( 'Shop Manager', 'woocommerce' ), array(
-		    'read' 						=> true,
-		    'read_private_pages'		=> true,
-		    'read_private_posts'		=> true,
-		    'edit_users'				=> true,
-		    'edit_posts' 				=> true,
-		    'edit_pages' 				=> true,
-		    'edit_published_posts'		=> true,
-		    'edit_published_pages'		=> true,
-		    'edit_private_pages'		=> true,
-		    'edit_private_posts'		=> true,
-		    'edit_others_posts' 		=> true,
-		    'edit_others_pages' 		=> true,
-		    'publish_posts' 			=> true,
-		    'publish_pages'				=> true,
-		    'delete_posts' 				=> true,
-		    'delete_pages' 				=> true,
-		    'delete_private_pages'		=> true,
-		    'delete_private_posts'		=> true,
-		    'delete_published_pages'	=> true,
-		    'delete_published_posts'	=> true,
-		    'delete_others_posts' 		=> true,
-		    'delete_others_pages' 		=> true,
-		    'manage_categories' 		=> true,
-		    'manage_links'				=> true,
-		    'moderate_comments'			=> true,
-		    'unfiltered_html'			=> true,
-		    'upload_files'				=> true,
-		   	'export'					=> true,
-			'import'					=> true
+			'level_9'                => true,
+			'level_8'                => true,
+			'level_7'                => true,
+			'level_6'                => true,
+			'level_5'                => true,
+			'level_4'                => true,
+			'level_3'                => true,
+			'level_2'                => true,
+			'level_1'                => true,
+			'level_0'                => true,
+		    'read'                   => true,
+		    'read_private_pages'     => true,
+		    'read_private_posts'     => true,
+		    'edit_users'             => true,
+		    'edit_posts'             => true,
+		    'edit_pages'             => true,
+		    'edit_published_posts'   => true,
+		    'edit_published_pages'   => true,
+		    'edit_private_pages'     => true,
+		    'edit_private_posts'     => true,
+		    'edit_others_posts'      => true,
+		    'edit_others_pages'      => true,
+		    'publish_posts'          => true,
+		    'publish_pages'          => true,
+		    'delete_posts'           => true,
+		    'delete_pages'           => true,
+		    'delete_private_pages'   => true,
+		    'delete_private_posts'   => true,
+		    'delete_published_pages' => true,
+		    'delete_published_posts' => true,
+		    'delete_others_posts'    => true,
+		    'delete_others_pages'    => true,
+		    'manage_categories'      => true,
+		    'manage_links'           => true,
+		    'moderate_comments'      => true,
+		    'unfiltered_html'        => true,
+		    'upload_files'           => true,
+		   	'export'                 => true,
+			'import'                 => true
 		) );
 
 		$capabilities = woocommerce_get_core_capabilities();
@@ -2101,6 +2114,16 @@ function woocommerce_get_order_item_meta( $item_id, $key, $single = true ) {
  */
 function woocommerce_date_format() {
 	return apply_filters( 'woocommerce_date_format', get_option( 'date_format' ) );
+}
+
+/**
+ * WooCommerce Time Format - Allows to change time format for everything WooCommerce
+ *
+ * @access public
+ * @return string
+ */
+function woocommerce_time_format() {
+	return apply_filters( 'woocommerce_time_format', get_option( 'time_format' ) );
 }
 
 /**
@@ -2408,7 +2431,7 @@ function woocommerce_cancel_unpaid_orders() {
 
 	$held_duration = get_option( 'woocommerce_hold_stock_minutes' );
 
-	if ( $held_duration == '' )
+	if ( $held_duration < 1 || get_option( 'woocommerce_manage_stock' ) != 'yes' )
 		return;
 
 	$date = date( "Y-m-d H:i:s", strtotime( '-' . absint( $held_duration ) . ' MINUTES', current_time( 'timestamp' ) ) );
@@ -2424,13 +2447,15 @@ function woocommerce_cancel_unpaid_orders() {
 		AND 	posts.post_status = 'publish'
 		AND 	tax.taxonomy      = 'shop_order_status'
 		AND		term.slug	      IN ('pending')
-		AND 	posts.post_date   < %s
+		AND 	posts.post_modified < %s
 	", $date ) );
 
 	if ( $unpaid_orders ) {
 		foreach ( $unpaid_orders as $unpaid_order ) {
 			$order = new WC_Order( $unpaid_order );
-			$order->update_status( 'cancelled', __( 'Unpaid order cancelled - time limit reached.', 'woocommerce' ) );
+
+			if ( apply_filters( 'woocommerce_cancel_unpaid_order', true, $order ) )
+				$order->update_status( 'cancelled', __( 'Unpaid order cancelled - time limit reached.', 'woocommerce' ) );
 		}
 	}
 
@@ -2439,64 +2464,3 @@ function woocommerce_cancel_unpaid_orders() {
 }
 
 add_action( 'woocommerce_cancel_unpaid_orders', 'woocommerce_cancel_unpaid_orders' );
-
-/**
- * Process the login.
- *
- * @access public
- * @package 	WooCommerce/Widgets
- * @return void
- */
-function woocommerce_sidebar_login_process() {
-
-	if (isset($_POST['woocommerce_login'])) {
-
-		global $login_errors;
-
-		// Get redirect URL
-		$redirect_to = esc_url( apply_filters( 'woocommerce_login_widget_redirect', get_permalink( woocommerce_get_page_id( 'myaccount' ) ) ) );
-
-		// Check for Secure Cookie
-		$secure_cookie = '';
-
-		// If the user wants ssl but the session is not ssl, force a secure cookie.
-		if ( !empty($_POST['log']) && !force_ssl_admin() ) {
-			$user_name = sanitize_user($_POST['log']);
-			if ( $user = get_user_by('login', $user_name) ) {
-				if ( get_user_option('use_ssl', $user->ID) ) {
-					$secure_cookie = true;
-					force_ssl_admin(true);
-				}
-			}
-		}
-
-		if ( force_ssl_admin() ) $secure_cookie = true;
-		if ( $secure_cookie == '' && force_ssl_login() ) $secure_cookie = false;
-
-		// Login
-		$user = wp_signon( '', $secure_cookie );
-
-		// Redirect filter
-		if ( $secure_cookie && strstr($redirect_to, 'wp-admin') ) $redirect_to = str_replace('http:', 'https:', $redirect_to);
-
-		// Check the username
-		if ( !$_POST['log'] ) :
-			$user = new WP_Error();
-			$user->add('empty_username', '<strong>' . __( 'ERROR', 'woocommerce' ) . '</strong>: ' . __( 'Please enter a username.', 'woocommerce' ));
-		elseif ( !$_POST['pwd'] ) :
-			$user = new WP_Error();
-			$user->add('empty_username', '<strong>' . __( 'ERROR', 'woocommerce' ) . '</strong>: ' . __( 'Please enter your password.', 'woocommerce' ));
-		endif;
-
-		// Redirect if successful
-		if ( !is_wp_error($user) ) :
-			wp_safe_redirect( $redirect_to );
-			exit;
-		endif;
-
-		$login_errors = $user;
-
-	}
-}
-
-add_action( 'init', 'woocommerce_sidebar_login_process', 0 );

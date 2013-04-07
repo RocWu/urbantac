@@ -76,8 +76,8 @@ class WC_Checkout {
 
 		$this->checkout_fields['account']['account_password-2'] = array(
 			'type' 				=> 'password',
-			'label' 			=> __( 'Account password', 'woocommerce' ),
-			'placeholder' 		=> _x( 'Password', 'placeholder', 'woocommerce' ),
+			'label' 			=> __( 'Confirm password', 'woocommerce' ),
+			'placeholder' 		=> _x( 'Confirm password', 'placeholder', 'woocommerce' ),
 			'class' 			=> array( 'form-row-last' ),
 			'label_class' 		=> array( 'hidden' )
 		);
@@ -275,7 +275,7 @@ class WC_Checkout {
 
 			 	// Add line item meta for backorder status
 			 	if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $values['quantity'] ) )
-			 		woocommerce_add_order_item_meta( $item_id, __( 'Backordered', 'woocommerce' ), $values['quantity'] - max( 0, $_product->get_total_stock() ) );
+			 		woocommerce_add_order_item_meta( $item_id, apply_filters( 'woocommerce_backordered_item_meta_name', __( 'Backordered', 'woocommerce' ), $cart_item_key, $order_id ), $values['quantity'] - max( 0, $_product->get_total_stock() ) );
 
 			 	//allow plugins to add order item meta
 			 	do_action( 'woocommerce_add_order_item_meta', $item_id, $values );
@@ -682,7 +682,7 @@ class WC_Checkout {
 						$result = apply_filters('woocommerce_payment_successful_result', $result );
 
 						if ( is_ajax() ) {
-							echo json_encode( $result ) . '<!--WC_END-->';
+							echo '<!--WC_START-->' . json_encode( $result ) . '<!--WC_END-->';
 							exit;
 						} else {
 							wp_redirect( $result['redirect'] );
@@ -708,7 +708,7 @@ class WC_Checkout {
 
 					// Redirect to success/confirmation/payment page
 					if ( is_ajax() ) {
-						echo json_encode(
+						echo '<!--WC_START-->' . json_encode(
 							array(
 								'result' 	=> 'success',
 								'redirect' => apply_filters( 'woocommerce_checkout_no_payment_needed_redirect', $return_url, $order)
@@ -740,7 +740,7 @@ class WC_Checkout {
 			$woocommerce->show_messages();
 			$messages = ob_get_clean();
 
-			echo json_encode(
+			echo '<!--WC_START-->' . json_encode(
 				array(
 					'result'	=> 'failure',
 					'messages' 	=> $messages,

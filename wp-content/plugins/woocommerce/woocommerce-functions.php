@@ -11,6 +11,24 @@
  */
 
 /**
+ * Handle IPN requests for the legacy paypal gateway by calling gateways manually if needed.
+ *
+ * @access public
+ * @return void
+ */
+function woocommerce_legacy_paypal_ipn() {
+	if ( ! empty( $_GET['paypalListener'] ) && $_GET['paypalListener'] == 'paypal_standard_IPN' ) {
+		global $woocommerce;
+
+		$woocommerce->payment_gateways();
+
+		do_action( 'woocommerce_api_wc_gateway_paypal' );
+	}
+}
+
+add_action( 'init', 'woocommerce_legacy_paypal_ipn' );
+
+/**
  * Handle redirects before content is output - hooked into template_redirect so is_page works.
  *
  * @access public
@@ -50,11 +68,11 @@ function woocommerce_template_redirect() {
 	}
 
 	// Redirect to the product page if we have a single product
-	elseif ( is_search() && is_post_type_archive( 'product' ) ) {
-		if ( $wp_query->post_count == 1 ) {
-			$product = get_product( $wp_query->post );
-			if ( $product->is_visible() )
-				wp_safe_redirect( get_permalink( $product->id ), 302 );
+	elseif ( is_search() && is_post_type_archive( 'product' ) && apply_filters( 'woocommerce_redirect_single_search_result', true ) && $wp_query->post_count == 1 ) {
+		$product = get_product( $wp_query->post );
+
+		if ( $product->is_visible() ) {
+			wp_safe_redirect( get_permalink( $product->id ), 302 );
 			exit;
 		}
 	}
@@ -226,9 +244,9 @@ function woocommerce_update_cart_action() {
 					continue;
 
 				// Sanitize
-				$quantity = preg_replace( "/[^0-9\.]/", "", $cart_totals[ $cart_item_key ]['qty'] );
+				$quantity = apply_filters( 'woocommerce_stock_amount_cart_item', apply_filters( 'woocommerce_stock_amount', preg_replace( "/[^0-9\.]/", "", $cart_totals[ $cart_item_key ]['qty'] ) ), $cart_item_key );
 
-				if ( $quantity == "" )
+				if ( "" === $quantity )
 					continue;
 
 				// Update cart validation
@@ -280,6 +298,7 @@ function woocommerce_add_to_cart_action( $url = false ) {
 
 	$product_id          = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_REQUEST['add-to-cart'] ) );
 	$was_added_to_cart   = false;
+	$added_to_cart       = array();
 	$adding_to_cart      = get_product( $product_id );
 	$add_to_cart_handler = apply_filters( 'woocommerce_add_to_cart_handler', $adding_to_cart->product_type, $adding_to_cart );
 
@@ -294,8 +313,7 @@ function woocommerce_add_to_cart_action( $url = false ) {
 		// Only allow integer variation ID - if its not set, redirect to the product page
 		if ( empty( $variation_id ) ) {
 			$woocommerce->add_error( __( 'Please choose product options&hellip;', 'woocommerce' ) );
-			wp_redirect( get_permalink( $product_id ) );
-			exit;
+			return;
 		}
 
 		$attributes = $adding_to_cart->get_attributes();
@@ -311,16 +329,27 @@ function woocommerce_add_to_cart_action( $url = false ) {
             if ( ! empty( $_REQUEST[ $taxonomy ] ) ) {
 
                 // Get value from post data
-                $value = woocommerce_clean( $_REQUEST[ $taxonomy ] );
+                // Don't use woocommerce_clean as it destroys sanitized characters
+                $value = sanitize_title( trim( stripslashes( $_REQUEST[ $taxonomy ] ) ) );
 
                 // Get valid value from variation
                 $valid_value = $variation->variation_data[ $taxonomy ];
 
                 // Allow if valid
                 if ( $valid_value == '' || $valid_value == $value ) {
-
-	                // Use name so it looks nicer in the cart widget/order page etc - instead of a sanitized string
-	                $variations[ esc_html( $attribute['name'] ) ] = $value;
+	                if ( $attribute['is_taxonomy'] )
+	                	$variations[ esc_html( $attribute['name'] ) ] = $value;
+	                else {
+		                // For custom attributes, get the name from the slug
+		                $options = array_map( 'trim', explode( '|', $attribute['value'] ) );
+		                foreach ( $options as $option ) {
+		                	if ( sanitize_title( $option ) == $value ) {
+		                		$value = $option;
+		                		break;
+		                	}
+		                }
+		                 $variations[ esc_html( $attribute['name'] ) ] = $value;
+	                }
 	                continue;
 	            }
 
@@ -337,12 +366,12 @@ function woocommerce_add_to_cart_action( $url = false ) {
 				if ( $woocommerce->cart->add_to_cart( $product_id, $quantity, $variation_id, $variations ) ) {
 					woocommerce_add_to_cart_message( $product_id );
 					$was_added_to_cart = true;
+					$added_to_cart[] = $product_id;
 				}
 			}
         } else {
             $woocommerce->add_error( __( 'Please choose product options&hellip;', 'woocommerce' ) );
-            wp_redirect( get_permalink( $product_id ) );
-			exit;
+            return;
        }
 
     // Grouped Products
@@ -351,7 +380,6 @@ function woocommerce_add_to_cart_action( $url = false ) {
 		if ( ! empty( $_REQUEST['quantity'] ) && is_array( $_REQUEST['quantity'] ) ) {
 
 			$quantity_set = false;
-			$added_to_cart = array();
 
 			foreach ( $_REQUEST['quantity'] as $item => $quantity ) {
 				if ( $quantity <= 0 )
@@ -376,16 +404,14 @@ function woocommerce_add_to_cart_action( $url = false ) {
 
 			if ( ! $was_added_to_cart && ! $quantity_set ) {
 				$woocommerce->add_error( __( 'Please choose the quantity of items you wish to add to your cart&hellip;', 'woocommerce' ) );
-				wp_redirect( get_permalink( $product_id ) );
-				exit;
+				return;
 			}
 
 		} elseif ( $product_id ) {
 
 			/* Link on product archives */
 			$woocommerce->add_error( __( 'Please choose a product to add to your cart&hellip;', 'woocommerce' ) );
-			wp_redirect( get_permalink( $product_id ) );
-			exit;
+			return;
 
 		}
 
@@ -402,6 +428,7 @@ function woocommerce_add_to_cart_action( $url = false ) {
     		if ( $woocommerce->cart->add_to_cart( $product_id, $quantity ) ) {
     			woocommerce_add_to_cart_message( $product_id );
     			$was_added_to_cart = true;
+    			$added_to_cart[] = $product_id;
     		}
 		}
 
@@ -426,7 +453,7 @@ function woocommerce_add_to_cart_action( $url = false ) {
 
 		// Redirect to page without querystring args
 		elseif ( wp_get_referer() ) {
-			wp_safe_redirect( remove_query_arg( array( 'add-to-cart', 'quantity', 'product_id' ), wp_get_referer() ) );
+			wp_safe_redirect( add_query_arg( 'added-to-cart', implode( ',', $added_to_cart ), remove_query_arg( array( 'add-to-cart', 'quantity', 'product_id' ), wp_get_referer() ) ) );
 			exit;
 		}
 
@@ -824,15 +851,17 @@ function woocommerce_order_again() {
 		$quantity     = (int) $item['qty'];
 		$variation_id = (int) $item['variation_id'];
 		$variations   = array();
-		foreach ( $item['item_meta'] as $meta ) {
-			if ( ! substr( $meta['meta_name'], 0, 3) === 'pa_' ) continue;
-			$variations[$meta['meta_name']] = $meta['meta_value'];
+		$cart_item_data = apply_filters( 'woocommerce_order_again_cart_item_data', array(), $item, $order );
+
+		foreach ( $item['item_meta'] as $meta_name => $meta_value ) {
+			if ( 'pa_' === substr( $meta_name, 0, 3 ) )
+				$variations[ $meta_name ] = $meta_value[0];
 		}
 
 		// Add to cart validation
-		if ( ! apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations ) ) continue;
+		if ( ! apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations, $cart_item_data ) ) continue;
 
-		$woocommerce->cart->add_to_cart( $product_id, $quantity, $variation_id, $variations );
+		$woocommerce->cart->add_to_cart( $product_id, $quantity, $variation_id, $variations, $cart_item_data );
 	}
 
 	do_action( 'woocommerce_ordered_again', $order->id );
@@ -987,7 +1016,7 @@ function woocommerce_download_product() {
 		), array( '%d' ), array( '%s', '%s', '%d', '%s' ) );
 
 		// Trigger action
-		do_action( 'woocommerce_download_product', $email, $order_key, $product_id, $user_id, $download_id );
+		do_action( 'woocommerce_download_product', $email, $order_key, $product_id, $user_id, $download_id, $order_id );
 
 		// Get the download URL and try to replace the url with a path
 		$file_path = $_product->get_file_download_path( $download_id );
@@ -1004,7 +1033,18 @@ function woocommerce_download_product() {
 		// ...or serve it
 		if ( ! is_multisite() ) {
 
-			$site_url    = is_ssl() ? str_replace( 'https:', 'http:', site_url() ) : site_url();
+			/*
+			 * If WP FORCE_SSL_ADMIN is enabled, file will have been inserted as https from Media Library
+			 * site_url() depends on whether the page containing the download (ie; My Account) is served via SSL.
+			 * So blindly doing a str_replace is incorrect because it will fail with schemes are mismatched.
+			 */
+			$scheme = parse_url( $file_path, PHP_URL_SCHEME );
+
+			if ( $scheme ) {
+				$site_url = site_url( '', $scheme );
+			} else {
+				$site_url = is_ssl() ? str_replace( 'https:', 'http:', site_url() ) : site_url();
+			}
 
 			$file_path   = str_replace( trailingslashit( $site_url ), ABSPATH, $file_path );
 
@@ -1025,6 +1065,11 @@ function woocommerce_download_product() {
 			$remote_file = true;
 		} else {
 			$remote_file = false;
+
+			// Remove Query String
+			if ( strstr( $file_path, '?' ) )
+				$file_path = current( explode( '?', $file_path ) );
+
 			$file_path   = realpath( $file_path );
 		}
 
@@ -1058,10 +1103,15 @@ function woocommerce_download_product() {
 
 		nocache_headers();
 
+		$file_name = basename( $file_path );
+
+		if ( strstr( $file_name, '?' ) )
+			$file_name = current( explode( '?', $file_name ) );
+
 		header( "Robots: none" );
 		header( "Content-Type: " . $ctype );
 		header( "Content-Description: File Transfer" );
-		header( "Content-Disposition: attachment; filename=\"" . basename( $file_path ) . "\";" );
+		header( "Content-Disposition: attachment; filename=\"" . $file_name . "\";" );
 		header( "Content-Transfer-Encoding: binary" );
 
         if ( $size = @filesize( $file_path ) )
@@ -1073,7 +1123,7 @@ function woocommerce_download_product() {
          	if ( getcwd() )
          		$file_path = trim( preg_replace( '`^' . getcwd() . '`' , '', $file_path ), '/' );
 
-            header( "Content-Disposition: attachment; filename=\"" . basename( $file_path ) . "\";" );
+            header( "Content-Disposition: attachment; filename=\"" . $file_name . "\";" );
 
             if ( function_exists( 'apache_get_modules' ) && in_array( 'mod_xsendfile', apache_get_modules() ) ) {
 
@@ -1245,6 +1295,7 @@ function woocommerce_add_comment_rating($comment_id) {
 		add_comment_meta( $comment_id, 'rating', (int) esc_attr( $_POST['rating'] ), true );
 
 		delete_transient( 'wc_average_rating_' . esc_attr($post->ID) );
+		delete_transient( 'wc_rating_count_' . esc_attr($post->ID) );
 	}
 }
 
@@ -1315,7 +1366,7 @@ function woocommerce_track_product_view() {
 	setcookie( "woocommerce_recently_viewed", implode( '|', $viewed_products ), 0, COOKIEPATH, COOKIE_DOMAIN, false, true );
 }
 
-add_action( 'wp', 'woocommerce_track_product_view', 10 );
+add_action( 'template_redirect', 'woocommerce_track_product_view', 20 );
 
 /**
  * Layered Nav Init

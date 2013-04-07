@@ -281,7 +281,7 @@ function woocommerce_product_data_box() {
 				// Size fields
 				if( get_option( 'woocommerce_enable_dimensions', true ) !== 'no' ) :
 					?><p class="form-field dimensions_field">
-						<label for"product_length"><?php echo __( 'Dimensions', 'woocommerce' ) . ' (' . get_option( 'woocommerce_dimension_unit' ) . ')'; ?></label>
+						<label for="product_length"><?php echo __( 'Dimensions', 'woocommerce' ) . ' (' . get_option( 'woocommerce_dimension_unit' ) . ')'; ?></label>
 						<span class="wrap">
 							<input id="product_length" placeholder="<?php _e( 'Length', 'woocommerce' ); ?>" class="input-text" size="6" type="number" name="_length" value="<?php echo esc_attr( get_post_meta( $thepostid, '_length', true ) ); ?>" step="any" min="0" />
 							<input placeholder="<?php _e( 'Width', 'woocommerce' ); ?>" class="input-text" size="6" type="number" name="_width" value="<?php echo esc_attr( get_post_meta( $thepostid, '_width', true ) ); ?>"  step="any" min="0" />
@@ -332,8 +332,11 @@ function woocommerce_product_data_box() {
 			<div class="woocommerce_attributes wc-metaboxes">
 
 				<?php
-					$attribute_taxonomies = $woocommerce->get_attribute_taxonomies();	// Array of defined attribute taxonomies
-					$attributes = maybe_unserialize( get_post_meta( $thepostid, '_product_attributes', true ) );	// Product attributes - taxonomies and custom, ordered, with visibility and variation attributes set
+					// Array of defined attribute taxonomies
+					$attribute_taxonomies = $woocommerce->get_attribute_taxonomies();
+
+					// Product attributes - taxonomies and custom, ordered, with visibility and variation attributes set
+					$attributes = maybe_unserialize( get_post_meta( $thepostid, '_product_attributes', true ) );
 
 					$i = -1;
 
@@ -403,23 +406,37 @@ function woocommerce_product_data_box() {
 															$values = array();
 															foreach ( $post_terms as $term )
 																$values[] = $term->name;
-															echo implode( '|', $values );
+															echo implode( ' | ', $values );
 														}
 
-													?>" placeholder="<?php _e( 'Pipe separate terms', 'woocommerce' ); ?>" />
+													?>" placeholder="<?php _e( 'Pipe (|) separate terms', 'woocommerce' ); ?>" />
 												<?php endif; ?>
 												<?php do_action( 'woocommerce_product_option_terms', $tax, $i ); ?>
 											</td>
 										</tr>
 										<tr>
 											<td>
-												<label><input type="checkbox" class="checkbox" <?php if ( ! empty( $attribute['is_visible'] ) ) checked( $attribute['is_visible'], 1 ); ?> name="attribute_visibility[<?php echo $i; ?>]" value="1" /> <?php _e( 'Visible on the product page', 'woocommerce' ); ?></label>
+												<label><input type="checkbox" class="checkbox" <?php
+
+													if ( isset( $attribute['is_visible'] ) )
+														checked( $attribute['is_visible'], 1 );
+													else
+														checked( apply_filters( 'default_attribute_visibility', false, $tax ), true );
+
+												?> name="attribute_visibility[<?php echo $i; ?>]" value="1" /> <?php _e( 'Visible on the product page', 'woocommerce' ); ?></label>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<div class="enable_variation show_if_variable">
-												<label><input type="checkbox" class="checkbox" <?php if ( ! empty( $attribute['is_variation'] ) ) checked( $attribute['is_variation'], 1 ); ?> name="attribute_variation[<?php echo $i; ?>]" value="1" /> <?php _e( 'Used for variations', 'woocommerce' ); ?></label>
+												<label><input type="checkbox" class="checkbox" <?php
+
+													if ( isset( $attribute['is_variation'] ) )
+														checked( $attribute['is_variation'], 1 );
+													else
+														checked( apply_filters( 'default_attribute_variation', false, $tax ), true );
+
+												?> name="attribute_variation[<?php echo $i; ?>]" value="1" /> <?php _e( 'Used for variations', 'woocommerce' ); ?></label>
 												</div>
 											</td>
 										</tr>
@@ -432,7 +449,8 @@ function woocommerce_product_data_box() {
 
 					// Custom Attributes
 					if ( ! empty( $attributes ) ) foreach ( $attributes as $attribute ) {
-						if ( $attribute['is_taxonomy'] ) continue;
+						if ( $attribute['is_taxonomy'] )
+							continue;
 
 						$i++;
 
@@ -733,12 +751,10 @@ function woocommerce_process_product_meta( $post_id, $post ) {
 
 			 		// Format values
 			 		if ( is_array( $attribute_values[ $i ] ) ) {
-				 		$values = array_map('htmlspecialchars', array_map('stripslashes', $attribute_values[ $i ]));
+				 		$values = array_map( 'woocommerce_clean', $attribute_values[ $i ] );
 				 	} else {
 				 		// Text based, separate by pipe
-				 		$values = htmlspecialchars( stripslashes( $attribute_values[ $i ] ) );
-				 		$values = explode( '|', $values );
-				 		$values = array_map( 'trim', $values );
+				 		$values = array_map( 'woocommerce_clean', explode( '|', $attribute_values[ $i ] ) );
 				 	}
 
 				 	// Remove empty items in the array
@@ -755,7 +771,7 @@ function woocommerce_process_product_meta( $post_id, $post ) {
 		 		if ( $values ) {
 			 		// Add attribute to array, but don't set values
 			 		$attributes[ sanitize_title( $attribute_names[ $i ] ) ] = array(
-				 		'name' 			=> htmlspecialchars( stripslashes( $attribute_names[ $i ] ) ),
+				 		'name' 			=> woocommerce_clean( $attribute_names[ $i ] ),
 				 		'value' 		=> '',
 				 		'position' 		=> $attribute_position[ $i ],
 				 		'is_visible' 	=> $is_visible,
@@ -767,11 +783,11 @@ function woocommerce_process_product_meta( $post_id, $post ) {
 		 	} elseif ( isset( $attribute_values[ $i ] ) ) {
 
 		 		// Text based, separate by pipe
-		 		$values = implode( '|', array_map( 'trim', explode( '|', stripslashes( $attribute_values[ $i ] ) ) ) );
+		 		$values = implode( ' | ', array_map( 'woocommerce_clean', explode( '|', $attribute_values[ $i ] ) ) );
 
 		 		// Custom attribute - Add attribute to array and set the values
 			 	$attributes[ sanitize_title( $attribute_names[ $i ] ) ] = array(
-			 		'name' 			=> htmlspecialchars( stripslashes( $attribute_names[ $i ] ) ),
+			 		'name' 			=> woocommerce_clean( $attribute_names[ $i ] ),
 			 		'value' 		=> $values,
 			 		'position' 		=> $attribute_position[ $i ],
 			 		'is_visible' 	=> $is_visible,

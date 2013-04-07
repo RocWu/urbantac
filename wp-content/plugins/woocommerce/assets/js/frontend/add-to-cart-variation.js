@@ -130,6 +130,8 @@
 						all_variations = window[ "product_variations" ][ product_id ];
 					if ( ! all_variations )
 						all_variations = window[ "product_variations" ];
+					if ( ! all_variations )
+						all_variations = window[ "product_variations_" + product_id ];
 
 			        var matching_variations = $.fn.wc_variation_form.find_matching_variations( all_variations, current_settings );
 
@@ -237,33 +239,37 @@
 				        // Loop through variations
 				        for ( num in variations ) {
 
-				            var attributes = variations[ num ].attributes;
+				        	if ( typeof( variations[ num ] ) != "undefined" ) {
 
-				            for ( attr_name in attributes ) {
+					            var attributes = variations[ num ].attributes;
 
-				                var attr_val = attributes[ attr_name ];
+					            for ( attr_name in attributes ) {
 
-				                if ( attr_name == current_attr_name ) {
+					                var attr_val = attributes[ attr_name ];
 
-				                    if ( attr_val ) {
+					                if ( attr_name == current_attr_name ) {
 
-				                    	// Decode entities
-				                    	attr_val = $("<div/>").html( attr_val ).text();
+					                    if ( attr_val ) {
 
-				                    	// Add slashes
-				                    	attr_val = attr_val.replace(/'/g, "\\'");
-				                    	attr_val = attr_val.replace(/"/g, "\\\"");
+					                    	// Decode entities
+					                    	attr_val = $("<div/>").html( attr_val ).text();
 
-				                    	// Compare the meercat
-				                    	current_attr_select.find('option[value="' + attr_val + '"]').addClass('active');
+					                    	// Add slashes
+					                    	attr_val = attr_val.replace(/'/g, "\\'");
+					                    	attr_val = attr_val.replace(/"/g, "\\\"");
 
-				                    } else {
+					                    	// Compare the meercat
+					                    	current_attr_select.find('option[value="' + attr_val + '"]').addClass('active');
 
-				                    	current_attr_select.find('option:gt(0)').addClass('active');
+					                    } else {
 
-				                    }
+					                    	current_attr_select.find('option:gt(0)').addClass('active');
 
-				                }
+					                    }
+
+					                }
+
+					            }
 
 				            }
 

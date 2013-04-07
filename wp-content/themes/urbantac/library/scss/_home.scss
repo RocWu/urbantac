@@ -1,0 +1,19 @@
+.flexslider {
+  padding: 0 pxtoem(10px, $bodyFontSize);
+}
+
+.homepage-featured-panes {
+  a {
+    float: left;
+    padding: pxtoem(10px, $bodyFontSize);
+  }
+}
+
+.homepage-affiliates {
+  text-align: center;
+
+  .affiliate {
+    float: left;
+    padding: pxtoem(10px, $bodyFontSize);
+  }
+}

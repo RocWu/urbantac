@@ -10,6 +10,12 @@ and is called at the beginning, after that we call the rest
 of the styles inside media queries.
 ******************************************************************/
 
+// Import Compass plugins
+@import "compass/css3";
+@import "compass/layout/sticky-footer";
+@import "compass/css3/box-shadow";
+@import "compass/css3/images";
+@import "compass/css3/border-radius";
 
 //
 // IMPORTING STYLES
@@ -20,3 +26,167 @@ of the styles inside media queries.
 
 // import mixins
 @import "mixins";
+
+// import fontawesome
+@import "fontawesome";
+
+
+// SIZES
+$contentWidth: 960px;
+$bodyFontSize: 16px;
+$footerSize: 80px;
+$footerSizeEm: pxtoem($footerSize, $bodyFontSize);
+$h1FontSize: pxtoem(32px, $bodyFontSize);
+
+// COLORS
+$linkColor: #7F6F54;
+$hoverLinkColor: #BFA67E;
+$separatorColor: #FFDDA8;
+$boxShadowColor: #E5C797;
+
+@include sticky-footer($footerSize, ".wrapper", ".push", ".footer");
+
+html, body {
+  min-width: $contentWidth;
+  height: 100%;
+
+  font-family: Helvetica;
+  font-size: $bodyFontSize;
+  font-weight: 200;
+}
+
+a {
+  color: $linkColor;
+  text-decoration: none;
+
+  &:hover {
+    color: $hoverLinkColor;
+    text-decoration: underline;
+  }
+}
+
+h1, h2, h3 {
+  margin: 0 0 10px 0;
+  font-weight: 400;
+}
+
+p {
+  margin: pxtoem(10px, $bodyFontSize) 0;
+}
+
+.dash-separator {
+  color: $separatorColor;
+}
+
+.header {
+  height: pxtoem((image-height("urbantac-logo.png") + 1px), $bodyFontSize);
+  background-color: #000000;
+  border-bottom: 1px solid $linkColor;
+
+  .header-info {
+    font-size: pxtoem(13px, $bodyFontSize);
+    line-height: pxtoem(16px, $bodyFontSize);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .header-facebook {
+    font-size: pxtoem(12px, $bodyFontSize);
+    line-height: pxtoem(16px, $bodyFontSize);
+    margin: pxtoem(10px, $bodyFontSize) 0;
+  }
+
+  #inner-header {
+    position:relative;
+  }
+
+  .header-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-bottom: pxtoem(10px, $bodyFontSize);
+
+    text-align: right;
+    color: #ffffff;
+
+    a:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+ul.nav {
+    list-style: none;
+    margin: pxtoem(10px, $bodyFontSize) 0 0 0;
+
+    li {
+      float: left;
+      font-size: pxtoem(20px, $bodyFontSize);
+      font-weight: 400;
+
+      &:last-child > a .nav-divider {
+        display: none;
+      }
+
+      & > a {
+        &:hover {
+          text-decoration: none;
+        }
+
+        & .nav-divider {
+          padding: 0 pxtoem(3px, $bodyFontSize) 0 pxtoem(3px, $bodyFontSize);
+          color: $separatorColor;
+        }
+        
+      }
+    }
+}
+
+.footer {
+  background-color: #000000;
+  color: #ffffff;
+  font-size: pxtoem(13px, $bodyFontSize);
+  line-height: pxtoem(16px, $bodyFontSize);
+  border-top: 1px solid $linkColor;
+
+  #inner-footer {
+    padding-top: pxtoem(15.5px, $bodyFontSize);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .contact-info {
+    float: left;
+  }
+}
+
+.footer-social {
+  height: 100%;
+  float: right;
+  font-size: pxtoem(38px, $bodyFontSize);
+}
+
+#container.wrapper {
+  background: image-url("background-updated.png") no-repeat center center fixed;
+  @include background-size(cover);
+}
+
+#inner-header, .content-container, #inner-footer {
+  @include centered-box($contentWidth);
+}
+
+.content-container {
+  background-color: #ffffff;
+  padding: pxtoem(10px, $bodyFontSize) 0;
+}
+
+// Import the partials
+@import "home";
+@import "about";
+@import "services";
+@import "contact";
+@import "flexslider";

@@ -231,7 +231,7 @@ class WC_Product {
 	 * @return void
 	 */
 	function set_stock_status( $status ) {
-		$status = 'outofstock' ? 'outofstock' : 'instock';
+		$status = ( 'outofstock' === $status ) ? 'outofstock' : 'instock';
 
 		if ( $this->stock_status != $status ) {
 			update_post_meta( $this->id, '_stock_status', $status );
@@ -671,10 +671,7 @@ class WC_Product {
 	 * @return void
 	 */
 	function adjust_price( $price ) {
-		if ( $price > 0 )
-			$this->price += $price;
-		else
-			$this->price = $this->price - $price;
+		$this->price = $this->price + $price;
 	}
 
 
@@ -906,6 +903,7 @@ class WC_Product {
 					WHERE meta_key = 'rating'
 					AND comment_post_ID = %d
 					AND comment_approved = '1'
+					AND meta_value > 0
 				", $this->id ) );
 
 				$average_rating = number_format( $ratings / $count, 2 );
@@ -959,8 +957,6 @@ class WC_Product {
 
 			if ( $location )
 				$location = '_' . $location;
-
-			$average_rating = $this->get_average_rating();
 
 			$rating_html  = '<div class="star-rating" title="' . sprintf( __( 'Rated %s out of 5', 'woocommerce' ), $average_rating ) . '">';
 
@@ -1123,7 +1119,7 @@ class WC_Product {
 	 *
 	 * @access public
 	 * @param mixed $attr
-	 * @return mixed
+	 * @return string
 	 */
 	function get_attribute( $attr ) {
 		$attributes = $this->get_attributes();
@@ -1145,7 +1141,8 @@ class WC_Product {
 			}
 
 		}
-		return false;
+
+		return '';
 	}
 
 

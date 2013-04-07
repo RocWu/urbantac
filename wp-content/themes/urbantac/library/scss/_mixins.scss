@@ -1,6 +1,6 @@
 /******************************************************************
-Site Name:
-Author:
+Site Name: Urban Tactical Supplies
+Author: Michael Varrieur
 
 Stylesheet: Mixins & Constants Stylesheet
 
@@ -197,54 +197,32 @@ probably best not to use it. I mean, were you going to anyway? */
 	box-sizing:         $type;
 }
 
-
-/*********************
-BUTTONS
-*********************/
-
-.button, .button:visited {
-	font-family: $sans-serif;
-	border: 1px solid darken($link-color, 13%);
-	border-top-color: darken($link-color, 7%);
-	border-left-color: darken($link-color, 7%);
-	padding: 4px 12px;
-	color: $white;
-	display: inline-block;
-	font-size: 11px;
-	font-weight: bold;
-	text-decoration: none;
-	text-shadow: 0 1px rgba(0,0,0, .75);
-	cursor: pointer;
-	margin-bottom: 20px;
-	line-height: 21px;
-	border-radius: 4px;
-	@include css-gradient($link-color, darken($link-color, 5%));
-
-
-	&:hover, &:focus {
-		color: $white;
-	  	border: 1px solid darken($link-color, 13%);
-	  	border-top-color: darken($link-color, 20%);
-	 	border-left-color: darken($link-color, 20%);
-		@include css-gradient(darken($link-color, 5%), darken($link-color, 10%));
-	}
-
-	&:active {
-		@include css-gradient(darken($link-color, 5%), $link-color);
-	}
+@mixin centered-box($width: 960px) {
+	width: $width;
+	margin: 0 auto;
 }
 
-.blue-button, .blue-button:visited {
-	border-color: darken($bones-blue, 10%);
-	text-shadow: 0 1px 1px darken($bones-blue, 10%);
-	@include css-gradient( $bones-blue, darken($bones-blue, 5%) );
-	box-shadow: inset 0 0 3px lighten($bones-blue, 16%);
+@function pxtoem($target, $context){
+  @return ($target/$context)+0em;
+}
 
-	&:hover, &:focus {
-		border-color: darken($bones-blue, 15%);
-		@include css-gradient( darken($bones-blue, 4%), darken($bones-blue, 10%) );
-	}
-	&:active {
-		@include css-gradient( darken($bones-blue, 5%), $bones-blue );
-	}
+@function emtopx($target, $context){
+  @return ($target*$context)+0px;
+}
+
+@function pxtopercent($requested, $actual){
+  @return (($requested/$actual) * 100);
+}
+
+@mixin resize-sprite($map, $sprite, $percent) {
+  $spritePath:    sprite-path($map);
+  $spriteWidth:   image-width($spritePath);
+  $spriteHeight:  image-height($spritePath);
+  $width: image-width(sprite-file($map, $sprite));
+  $height: image-height(sprite-file($map, $sprite));
+ 
+  @include background-size(ceil($spriteWidth * ($percent/100)) ceil($spriteHeight * ($percent/100)));
+  width: ceil($width*($percent/100));
+  height: ceil($height*($percent/100));
+  background-position: 0 floor(nth(sprite-position($map, $sprite), 2)  * ($percent/100) );
 }

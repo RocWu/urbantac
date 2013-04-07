@@ -1,0 +1,17 @@
+.about-details {
+  padding: 0 pxtoem(10px, $bodyFontSize);
+  float: left;
+  width: pxtoem(640px, $bodyFontSize);
+}
+
+.about-image {
+  float: left;
+  width: pxtoem(320px, $bodyFontSize);
+  padding: 0 pxtoem(10px, $bodyFontSize);
+}
+
+.about-panorama {
+  padding: pxtoem(20px, $bodyFontSize) pxtoem(10px, $bodyFontSize) 0 pxtoem(10px, $bodyFontSize);
+  width: 100%;
+  clear: both;
+}

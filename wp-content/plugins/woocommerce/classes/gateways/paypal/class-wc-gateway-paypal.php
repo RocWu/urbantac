@@ -29,8 +29,8 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
         $this->id           = 'paypal';
         $this->icon         = apply_filters( 'woocommerce_paypal_icon', $woocommerce->plugin_url() . '/assets/images/icons/paypal.png' );
         $this->has_fields   = false;
-        $this->liveurl      = 'https://www.paypal.com/webscr';
-		$this->testurl      = 'https://www.sandbox.paypal.com/webscr';
+        $this->liveurl      = 'https://www.paypal.com/cgi-bin/webscr';
+		$this->testurl      = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
         $this->method_title = __( 'PayPal', 'woocommerce' );
         $this->notify_url   = str_replace( 'https:', 'http:', add_query_arg( 'wc-api', 'WC_Gateway_Paypal', home_url( '/' ) ) );
 
@@ -42,6 +42,7 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 		$this->title 			= $this->get_option( 'title' );
 		$this->description 		= $this->get_option( 'description' );
 		$this->email 			= $this->get_option( 'email' );
+		$this->receiver_email   = $this->get_option( 'receiver_email', $this->email );
 		$this->testmode			= $this->get_option( 'testmode' );
 		$this->send_shipping	= $this->get_option( 'send_shipping' );
 		$this->address_override	= $this->get_option( 'address_override' );
@@ -138,6 +139,14 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 							'title' => __( 'PayPal Email', 'woocommerce' ),
 							'type' 			=> 'email',
 							'description' => __( 'Please enter your PayPal email address; this is needed in order to take payment.', 'woocommerce' ),
+							'default' => '',
+							'desc_tip'      => true,
+							'placeholder'	=> 'you@youremail.com'
+						),
+			'receiver_email' => array(
+							'title' => __( 'Receiver Email', 'woocommerce' ),
+							'type' 			=> 'email',
+							'description' => __( 'If this differs from the email entered above, input your main receiver email for your PayPal account. This is used to validate IPN requests.', 'woocommerce' ),
 							'default' => '',
 							'desc_tip'      => true,
 							'placeholder'	=> 'you@youremail.com'
@@ -348,13 +357,17 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 
 						$paypal_args[ 'item_name_' . $item_loop ] 	= $item_name;
 						$paypal_args[ 'quantity_' . $item_loop ] 	= $item['qty'];
-						$paypal_args[ 'amount_' . $item_loop ] 		= $order->get_item_total( $item, false );
+						$paypal_args[ 'amount_' . $item_loop ] 		= $order->get_item_subtotal( $item, false );
 
 						if ( $product->get_sku() )
 							$paypal_args[ 'item_number_' . $item_loop ] = $product->get_sku();
 					}
 				}
 			}
+
+			// Discount
+			if ( $order->get_cart_discount() > 0 )
+				$paypal_args['discount_amount_cart'] = round( $order->get_cart_discount(), 2 );
 
 			// Fees
 			if ( sizeof( $order->get_fees() ) > 0 ) {
@@ -502,25 +515,19 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 			$this->log->add( 'paypal', 'Checking IPN response is valid...' );
 
     	// Get recieved values from post data
-		$received_values = (array) stripslashes_deep( $_POST );
-
-		// Check email address to make sure that IPN response is not a spoof
-		if ( strcasecmp( trim( $received_values['receiver_email'] ), trim( $this->email ) ) != 0 ) {
-			if ( 'yes' == $this->debug )
-				$this->log->add( 'paypal', "IPN Response is for another one: {$received_values['receiver_email']} our email is {$this->email}" );
-			return false;
-		}
-
-		 // Add cmd to the post array
-		$received_values['cmd'] = '_notify-validate';
+		$received_values = array( 'cmd' => '_notify-validate' );
+		$received_values += stripslashes_deep( $_POST );
 
         // Send back post vars to paypal
         $params = array(
         	'body' 			=> $received_values,
         	'sslverify' 	=> false,
-        	'timeout' 		=> 30,
+        	'timeout' 		=> 60,
         	'user-agent'	=> 'WooCommerce/' . $woocommerce->version
         );
+
+        if ( 'yes' == $this->debug )
+			$this->log->add( 'paypal', 'IPN Request: ' . print_r( $params, true ) );
 
         // Get url
        	if ( $this->testmode == 'yes' )
@@ -562,9 +569,7 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 
 		@ob_clean();
 
-    	$_POST = stripslashes_deep( $_POST );
-
-    	if ( $this->check_ipn_request_is_valid() ) {
+    	if ( ! empty( $_POST ) && $this->check_ipn_request_is_valid() ) {
 
     		header( 'HTTP/1.1 200 OK' );
 
@@ -589,18 +594,19 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 	function successful_request( $posted ) {
 		global $woocommerce;
 
+		$posted = stripslashes_deep( $posted );
+
 		// Custom holds post ID
 	    if ( ! empty( $posted['invoice'] ) && ! empty( $posted['custom'] ) ) {
 
 		    $order = $this->get_paypal_order( $posted );
 
+		     if ( 'yes' == $this->debug )
+	        	$this->log->add( 'paypal', 'Found order #' . $order->id );
+
 		    // Lowercase returned variables
 	        $posted['payment_status'] 	= strtolower( $posted['payment_status'] );
 	        $posted['txn_type'] 		= strtolower( $posted['txn_type'] );
-
-		    // Sandbox fix
-	        if ( $posted['test_ipn'] == 1 && $posted['payment_status'] == 'pending' )
-	        	$posted['payment_status'] = 'completed';
 
 	        if ( 'yes' == $this->debug )
 	        	$this->log->add( 'paypal', 'Payment status: ' . $posted['payment_status'] );
@@ -612,7 +618,7 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 	            	// Check order not already completed
 	            	if ( $order->status == 'completed' ) {
 	            		 if ( 'yes' == $this->debug )
-	            		 	$this->log->add( 'paypal', 'Aborting, Order #' . $order_id . ' is already complete.' );
+	            		 	$this->log->add( 'paypal', 'Aborting, Order #' . $order->id . ' is already complete.' );
 	            		 exit;
 	            	}
 
@@ -635,6 +641,17 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 
 				    	exit;
 				    }
+
+				    // Validate Email Address
+					if ( strcasecmp( trim( $posted['receiver_email'] ), trim( $this->receiver_email ) ) != 0 ) {
+						if ( 'yes' == $this->debug )
+							$this->log->add( 'paypal', "IPN Response is for another one: {$posted['receiver_email']} our email is {$this->receiver_email}" );
+
+						// Put this order on-hold for manual checking
+				    	$order->update_status( 'on-hold', sprintf( __( 'Validation error: PayPal IPN response from a different email address (%s).', 'woocommerce' ), $posted['receiver_email'] ) );
+
+				    	exit;
+					}
 
 					 // Store PP Details
 	                if ( ! empty( $posted['payer_email'] ) )

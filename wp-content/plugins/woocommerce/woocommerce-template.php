@@ -224,8 +224,7 @@ if ( ! function_exists( 'woocommerce_page_title' ) ) {
 		} else {
 
 			$shop_page_id = woocommerce_get_page_id( 'shop' );
-
-			$page_title = apply_filters( 'the_title', ( $shop_page_title = get_option( 'woocommerce_shop_page_title' ) ) ? $shop_page_title : get_the_title( $shop_page_id ), $shop_page_id );
+			$page_title   = get_the_title( $shop_page_id );
 
 		}
 
@@ -1259,10 +1258,10 @@ if ( ! function_exists( 'woocommerce_form_field' ) ) {
 	 * @subpackage	Forms
 	 * @param mixed $key
 	 * @param mixed $args
-	 * @param string $value (default: '')
+	 * @param string $value (default: null)
 	 * @return void
 	 */
-	function woocommerce_form_field( $key, $args, $value = ''  ) {
+	function woocommerce_form_field( $key, $args, $value = null ) {
 		global $woocommerce;
 
 		$defaults = array(
@@ -1276,7 +1275,8 @@ if ( ! function_exists( 'woocommerce_form_field' ) ) {
 			'return'            => false,
 			'options'           => array(),
 			'custom_attributes' => array(),
-			'validate'          => array()
+			'validate'          => array(),
+			'default'		    => '',
 		);
 
 		$args = wp_parse_args( $args, $defaults  );
@@ -1291,6 +1291,9 @@ if ( ! function_exists( 'woocommerce_form_field' ) ) {
 		}
 
 		$args['maxlength'] = ( $args['maxlength'] ) ? 'maxlength="' . absint( $args['maxlength'] ) . '"' : '';
+
+		if ( is_null( $value ) )
+			$value = $args['default'];
 
 		// Custom attribute handling
 		$custom_attributes = array();

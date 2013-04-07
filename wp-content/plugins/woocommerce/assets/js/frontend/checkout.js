@@ -171,7 +171,7 @@ jQuery(document).ready(function($) {
 	})
 
 	// Address-fields which refresh totals when all required fields are filled
-	.on( 'change', '.address-field input.input-text', function() {
+	.on( 'change', '.address-field input.input-text, .update_totals_on_change input.input-text', function() {
 		if ( dirtyInput ) {
 			input_changed();
 		}
@@ -182,7 +182,7 @@ jQuery(document).ready(function($) {
 		input_changed();
 	})
 
-	.on( 'keydown', '.address-field input.input-text', function( e ){
+	.on( 'keydown', '.address-field input.input-text, .update_totals_on_change input.input-text', function( e ){
 		var code = e.keyCode || e.which;
 		if ( code == '9' )
 			return;
@@ -249,8 +249,12 @@ jQuery(document).ready(function($) {
 				data: 		$form.serialize(),
 				success: 	function( code ) {
 						try {
-							// Get the valid JSON only
-							var code = code.split("<!--WC_END-->")[0];
+							// Get the valid JSON only from the returned string
+							if ( code.indexOf("<!--WC_START-->") >= 0 )
+								code = code.split("<!--WC_START-->")[1]; // Strip off before after WC_START
+
+							if ( code.indexOf("<!--WC_END-->") >= 0 )
+								code = code.split("<!--WC_END-->")[0]; // Strip off anything after WC_END
 
 							// Parse
 							var result = $.parseJSON( code );
@@ -341,7 +345,7 @@ jQuery(document).ready(function($) {
 
 		var thisform = wrapper;
 
-		if ( locale[country] ) {
+		if ( typeof locale[country] != 'undefined' ) {
 			var thislocale = locale[country];
 		} else {
 			var thislocale = locale['default'];
@@ -372,7 +376,9 @@ jQuery(document).ready(function($) {
 
 				field.find('label abbr').remove();
 
-				if ( typeof thislocale[key]['required'] == 'undefined' || thislocale[key]['required'] == true ) {
+				if ( typeof thislocale[key]['required'] == 'undefined' && locale['default'][key]['required'] == true ) {
+					field.find('label').append( required );
+				} else if ( thislocale[key]['required'] == true ) {
 					field.find('label').append( required );
 				}
 
@@ -428,7 +434,8 @@ jQuery(document).ready(function($) {
 	});
 
 	// Update on page load
-	if ( woocommerce_params.is_checkout == 1 )
+	if ( woocommerce_params.is_checkout == 1 ) {
 		$('body').trigger('init_checkout');
+	}
 
 });

@@ -1,81 +1,200 @@
-/*
-Syntax error: File to import not found or unreadable: grid.
-              Load paths:
-                /Applications/MAMP/htdocs/urbantac/wp-content/themes/urbantac/library/scss
-                /Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/frameworks/blueprint/stylesheets
-                /Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/frameworks/compass/stylesheets
-                Compass::SpriteImporter
-        on line 24 of /Applications/MAMP/htdocs/urbantac/wp-content/themes/urbantac/library/scss/ie.scss
+/******************************************************************
+Site Name: 
+Author: 
 
-Backtrace:
-/Applications/MAMP/htdocs/urbantac/wp-content/themes/urbantac/library/scss/ie.scss:24
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/import_node.rb:67:in `rescue in import'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/import_node.rb:45:in `import'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/import_node.rb:28:in `imported_file'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/import_node.rb:37:in `css_import?'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/perform.rb:215:in `visit_import'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/perform.rb:98:in `visit'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/base.rb:53:in `map'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/base.rb:53:in `visit_children'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/perform.rb:107:in `block in visit_children'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/perform.rb:119:in `with_environment'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/perform.rb:106:in `visit_children'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/base.rb:37:in `block in visit'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/perform.rb:126:in `visit_root'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/perform.rb:98:in `visit'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/visitors/perform.rb:7:in `visit'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/tree/root_node.rb:20:in `render'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/engine.rb:315:in `_render'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/sass-3.2.5/lib/sass/engine.rb:262:in `render'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/compiler.rb:140:in `block (2 levels) in compile'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/compiler.rb:126:in `timed'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/compiler.rb:139:in `block in compile'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/logger.rb:45:in `red'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/compiler.rb:138:in `compile'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/compiler.rb:118:in `compile_if_required'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/compiler.rb:103:in `block (2 levels) in run'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/compiler.rb:101:in `each'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/compiler.rb:101:in `block in run'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/compiler.rb:126:in `timed'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/compiler.rb:100:in `run'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/commands/watch_project.rb:147:in `recompile'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/commands/watch_project.rb:95:in `block (4 levels) in perform'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/path.rb:73:in `call'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/path.rb:73:in `run_callback'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/path.rb:55:in `callback_action'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/path.rb:39:in `delete'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/state/directory.rb:32:in `block in deleted'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/state/directory.rb:31:in `each'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/state/directory.rb:31:in `deleted'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/state/directory.rb:16:in `refresh'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/backends/rbfsevent.rb:30:in `block in temporary_multipath_handler'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/backends/rbfsevent.rb:27:in `each'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/backends/rbfsevent.rb:27:in `temporary_multipath_handler'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/backends/rbfsevent.rb:17:in `block (2 levels) in run'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/backends/rbfsevent.rb:16:in `each'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/backends/rbfsevent.rb:16:in `block in run'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/rb-fsevent-0.9.3/lib/rb-fsevent/fsevent.rb:43:in `call'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/rb-fsevent-0.9.3/lib/rb-fsevent/fsevent.rb:43:in `run'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/backends/rbfsevent.rb:20:in `run'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm/monitor.rb:26:in `run'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/fssm-0.2.10/lib/fssm.rb:70:in `monitor'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/commands/watch_project.rb:87:in `perform'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/commands/base.rb:18:in `execute'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/commands/project_base.rb:19:in `execute'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/exec/sub_command_ui.rb:43:in `perform!'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/lib/compass/exec/sub_command_ui.rb:15:in `run!'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/bin/compass:30:in `block in <top (required)>'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/bin/compass:44:in `call'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/bin/compass:44:in `<top (required)>'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/bin/compass:19:in `load'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/bin/compass:19:in `<main>'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/bin/ruby_noexec_wrapper:14:in `eval'
-/Users/Mike/.rvm/gems/ruby-1.9.3-p374/bin/ruby_noexec_wrapper:14:in `<main>'
+Stylesheet: IE Stylesheet
+
+So instead of using the respond.js file to add media query support
+to IE, we're going to use SASS to create an easily readable css file.
+Here, we import all the styles the standard stylesheet gets, only
+without the media queries. No need to worry about editing anything!
+
+******************************************************************/
+/*
+Remember, all the BASE styles are called already since IE can
+read those. Below, we need to import only the stuff IE can't 
+understand (what's inside the media queries). We also need to
+import the mixins file so SASS can understand the variables.
 */
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Syntax error: File to import not found or unreadable: grid.\A               Load paths:\A                 /Applications/MAMP/htdocs/urbantac/wp-content/themes/urbantac/library/scss\A                 /Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/frameworks/blueprint/stylesheets\A                 /Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/frameworks/compass/stylesheets\A                 Compass::SpriteImporter\A         on line 24 of /Applications/MAMP/htdocs/urbantac/wp-content/themes/urbantac/library/scss/ie.scss"; }
+/* import mixins */
+/******************************************************************
+Site Name: Urban Tactical Supplies
+Author: Michael Varrieur
+
+Stylesheet: Mixins & Constants Stylesheet
+
+This is where you can take advantage of Sass' great features:
+Mixins & Constants. I won't go in-depth on how they work exactly,
+there are a few articles below that will help do that. What I will
+tell you is that this will help speed up simple changes like
+changing a color or adding CSS3 techniques gradients.
+
+A WORD OF WARNING: It's very easy to overdo it here. Be careful and
+remember less is more.
+
+******************************************************************/
+/*********************
+CLEARFIXIN'
+*********************/
+/* line 23, ../scss/_mixins.scss */
+.clearfix {
+  zoom: 1;
+}
+/* line 25, ../scss/_mixins.scss */
+.clearfix:before, .clearfix:after {
+  content: "";
+  display: table;
+}
+/* line 26, ../scss/_mixins.scss */
+.clearfix:after {
+  clear: both;
+}
+
+/*********************
+TOOLS
+*********************/
+/* line 34, ../scss/_mixins.scss */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 41, ../scss/_mixins.scss */
+.image-replacement {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/*********************
+COLORS
+Need help w/ choosing your colors? Try this site out:
+http://0to255.com/
+*********************/
+/*
+Here's a great tutorial on how to
+use color variables properly:
+http://sachagreif.com/sass-color-variables/
+*/
+/*********************
+TYPOGRAPHY
+*********************/
+/* 	To embed your own fonts, use this syntax
+	and place your fonts inside the
+	library/fonts folder. For more information
+	on embedding fonts, go to:
+	http://www.fontsquirrel.com/
+	Be sure to remove the comment brackets.
+*/
+/*	@font-face {
+    	font-family: 'Font Name';
+    	src: url('library/fonts/font-name.eot');
+    	src: url('library/fonts/font-name.eot?#iefix') format('embedded-opentype'),
+             url('library/fonts/font-name.woff') format('woff'),
+             url('library/fonts/font-name.ttf') format('truetype'),
+             url('library/fonts/font-name.svg#font-name') format('svg');
+    	font-weight: normal;
+    	font-style: normal;
+	}
+*/
+/*
+use the best ampersand
+http://simplebits.com/notebook/2008/08/14/ampersands-2/
+*/
+/* line 107, ../scss/_mixins.scss */
+span.amp {
+  font-family: Baskerville, "Goudy Old Style", Palatino, "Book Antiqua", serif !important;
+  font-style: italic;
+}
+
+/* line 113, ../scss/_mixins.scss */
+.text-left {
+  text-align: left;
+}
+
+/* line 114, ../scss/_mixins.scss */
+.text-center {
+  text-align: center;
+}
+
+/* line 115, ../scss/_mixins.scss */
+.text-right {
+  text-align: right;
+}
+
+/* line 119, ../scss/_mixins.scss */
+.alert-help, .alert-info, .alert-error, .alert-success {
+  margin: 10px;
+  padding: 5px 18px;
+  border: 1px solid;
+}
+
+/* line 125, ../scss/_mixins.scss */
+.alert-help {
+  border-color: #e8dc59;
+  background: #ebe16f;
+}
+
+/* line 131, ../scss/_mixins.scss */
+.alert-info {
+  border-color: #bfe4f4;
+  background: #d5edf8;
+}
+
+/* line 137, ../scss/_mixins.scss */
+.alert-error {
+  border-color: #f8cdce;
+  background: #fbe3e4;
+}
+
+/* line 143, ../scss/_mixins.scss */
+.alert-success {
+  border-color: #deeaae;
+  background: #e6efc2;
+}
+
+/*********************
+TRANSITION
+*********************/
+/*
+I totally rewrote this to be cleaner and easier to use.
+You'll need to be using Sass 3.2+ for these to work.
+Thanks to @anthonyshort for the inspiration on these.
+USAGE: @include transition(all 0.2s ease-in-out);
+*/
+/*********************
+CSS3 GRADIENTS
+Be careful with these since they can
+really slow down your CSS. Don't overdue it.
+*********************/
+/* @include css-gradient(#dfdfdf,#f8f8f8); */
+/*********************
+BOX SIZING
+*********************/
+/* @include box-sizing(border-box); */
+/* NOTE: value of "padding-box" is only supported in Gecko. So
+probably best not to use it. I mean, were you going to anyway? */
+/* 
+you can call the larger styles if you want, but there's really no need 
+*/
+/******************************************************************
+ADDITIONAL IE FIXES
+These fixes are now ONLY seen by IE, so you don't have to worry
+about using prefixes, although it's best practice. For more info
+on using Modernizr classes, check out this link:
+http://www.modernizr.com/docs/
+******************************************************************/
+/*
+For example, you can use something like:
+
+.no-textshadow .class { ... }
+
+You can also target specific versions by using the classes applied to
+the html element. These can sometimes change, so take a look inside the
+header.php file to see what they are:
+
+
+.lt-ie8 .class { ... }
+
+*/
