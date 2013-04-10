@@ -165,8 +165,22 @@ function bones_wpsearch($form) {
 remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
 
-add_action('woocommerce_before_main_content', 'my_theme_wrapper_start', 10);
-add_action('woocommerce_after_main_content', 'my_theme_wrapper_end', 10);
+// remove breadcrumb on main shop page
+//remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0);
+
+// remove sidebar
+//remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
+
+add_action('woocommerce_before_main_content', 'urbantac_wrapper_start', 10);
+add_action('woocommerce_after_main_content', 'urbantac_wrapper_end', 10);
+
+function urbantac_wrapper_start() {
+  echo '<div id="products-content" class="products wrap clearfix aligncenter content-container">';
+}
+ 
+function urbantac_wrapper_end() {
+  echo '</div> <!-- end #products-content -->';
+}
 
 
 ?>

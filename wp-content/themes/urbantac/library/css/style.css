@@ -1432,6 +1432,22 @@ ul.nav li > a .nav-divider {
   height: 100%;
 }
 
+/* line 1, ../scss/_products.scss */
+.products.content-container {
+  padding: 0.625em;
+}
+
+/* line 7, ../scss/_products.scss */
+#products-content.products .product .images {
+  float: left;
+  width: 50%;
+}
+/* line 12, ../scss/_products.scss */
+#products-content.products .product .summary {
+  width: 50%;
+  float: left;
+}
+
 /*
  * jQuery FlexSlider v2.0
  * http://www.woothemes.com/flexslider/
