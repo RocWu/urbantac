@@ -1,0 +1,17 @@
+.products.content-container {
+  padding: pxtoem(10px, $bodyFontSize);
+}
+
+#products-content.products {
+  .product {
+    .images {
+      float: left;
+      width: 50%;
+    }
+
+    .summary {
+      width: 50%;
+      float: left;
+    }
+  }
+}
