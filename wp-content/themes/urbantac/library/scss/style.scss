@@ -183,6 +183,14 @@ ul.nav {
   background-color: #ffffff;
   padding: pxtoem(10px, $bodyFontSize) 0;
 }
+div.pp_details a.pp_close {
+  right: 0;
+}
+div.pp_content {
+  a.pp_expand, a.pp_contract {
+    left: 0;
+  }
+}
 
 // Import the partials
 @import "home";
@@ -190,4 +198,5 @@ ul.nav {
 @import "services";
 @import "contact";
 @import "products";
+@import "links";
 @import "flexslider";

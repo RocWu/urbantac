@@ -1,0 +1,24 @@
+#links-content {
+  padding: pxtoem(10px, $bodyFontSize) pxtoem(10px, $bodyFontSize) 0 pxtoem(10px, $bodyFontSize);
+
+  .link {
+    padding: pxtoem(20px, $bodyFontSize) 0;
+    border-bottom: 1px dashed $linkColor;
+    h2 {
+      font-size: 1.25em;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  .link-image {
+    float: left;
+    margin-right: pxtoem(20px, $bodyFontSize);
+  }
+
+  .link-description {
+    float: right;
+    width: 748px;
+  }
+}

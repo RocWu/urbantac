@@ -7,7 +7,7 @@ Template Name: Contact Page
 <?php get_header(); ?>
 
   <div id="content-wrap">
-    <div id="contact-content" class="contact wrap clearfix aligncenter content-container">
+    <div id="contact-content" class="contact wrap clearfix aligncenter content-container" itemscope itemtype="http://schema.org/LocalBusiness">
       <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
         <div class="contact-details clearfix">
           <h1><?php the_title(); ?></h1>
@@ -29,8 +29,11 @@ Template Name: Contact Page
         </div>
 
         <div class="contact-map-container clearfix">
-          <p class="phone">774.302.0130</p>
-          <p class="address">260 Main Street, Buzzards Bay, Massachusetts 02532</p>
+          <p class="phone"><span itemprop="telephone">774.302.0130</span></p>
+          <p itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" class="address"><span itemprop="streetAddress">260 Main Street</span>, <span itemprop="addressLocality">Buzzards Bay</span>, <span itemprop="addressRegion">Massachusetts</span> <span itemprop="postalCode">02532</span></p>
+          <p class="hours">Tuesday - Friday 9:00am-5:00pm <span class="separator">/</span> Saturday 9:00am-1:00pm</p>
+          <meta itemprop="openingHours" content="Tu-Fr 09:00-17:00">
+          <meta itemprop="openingHours" content="Sa 11:00-13:00">
           <div class="contact-map-wrap">
             <div id="contact-map"></div>
           </div>

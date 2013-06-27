@@ -144,24 +144,20 @@ class WC_Cart {
 							'quantity' 		=> $values['quantity'],
 							'data'			=> $_product
 						), $values, $key );
-
 					}
 				}
-
-				do_action( 'woocommerce_cart_loaded_from_session', $this );
-
-				if ( ! is_array( $this->cart_contents ) )
-					$this->cart_contents = array();
-
-			} else {
-				$this->cart_contents = array();
 			}
 
-			// Cookie
+			if ( empty( $this->cart_contents ) || ! is_array( $this->cart_contents ) )
+				$this->cart_contents = array();
+
 			if ( sizeof( $this->cart_contents ) > 0 )
-				$woocommerce->cart_has_contents_cookie( true );
+				$this->set_cart_cookies();
 			else
-				$woocommerce->cart_has_contents_cookie( false );
+				$this->set_cart_cookies( false );
+
+			// Trigger action
+			do_action( 'woocommerce_cart_loaded_from_session', $this );
 
 			// Load totals
 			$this->cart_contents_total 	= isset( $woocommerce->session->cart_contents_total ) ? $woocommerce->session->cart_contents_total : 0;
@@ -702,14 +698,14 @@ class WC_Cart {
 		 * @return array merged taxes
 		 */
 		public function get_taxes() {
-			$merged_taxes = array();
+			$taxes = array();
 
 			// Merge
 			foreach ( array_keys( $this->taxes + $this->shipping_taxes ) as $key ) {
-				$merged_taxes[ $key ] = ( isset( $this->shipping_taxes[ $key ] ) ? $this->shipping_taxes[ $key ] : 0 ) + ( isset( $this->taxes[ $key ] ) ? $this->taxes[ $key ] : 0 );
+				$taxes[ $key ] = ( isset( $this->shipping_taxes[ $key ] ) ? $this->shipping_taxes[ $key ] : 0 ) + ( isset( $this->taxes[ $key ] ) ? $this->taxes[ $key ] : 0 );
 			}
 
-			return $merged_taxes;
+			return apply_filters( 'woocommerce_cart_get_taxes', $taxes, $this );
 		}
 
 		/**
@@ -718,7 +714,6 @@ class WC_Cart {
 		 * @return array merged taxes
 		 */
 		public function get_formatted_taxes() {
-
 			$taxes = $this->get_taxes();
 
 			foreach ( $taxes as $key => $tax )
@@ -726,6 +721,34 @@ class WC_Cart {
 					$taxes[ $key ] = woocommerce_price( $tax );
 
 			return apply_filters( 'woocommerce_cart_formatted_taxes', $taxes, $this );
+		}
+
+		/**
+		 * Get taxes, merged by code, formatted ready for output.
+		 *
+		 * @access public
+		 * @return void
+		 */
+		public function get_tax_totals() {
+			$taxes      = $this->get_taxes();
+			$tax_totals = array();
+
+			foreach ( $taxes as $key => $tax ) {
+
+				$code = $this->tax->get_rate_code( $key );
+
+				if ( ! isset( $tax_totals[ $code ] ) ) {
+					$tax_totals[ $code ] = new stdClass();
+					$tax_totals[ $code ]->amount = 0;
+				}
+
+				$tax_totals[ $code ]->is_compound       = $this->tax->is_compound( $key );
+				$tax_totals[ $code ]->label             = $this->tax->get_rate_label( $key );
+				$tax_totals[ $code ]->amount           += $tax;
+				$tax_totals[ $code ]->formatted_amount  = woocommerce_price( $tax_totals[ $code ]->amount );
+			}
+
+			return apply_filters( 'woocommerce_cart_tax_totals', $tax_totals, $this );
 		}
 
 	/*-----------------------------------------------------------------------------------*/
@@ -895,8 +918,7 @@ class WC_Cart {
 
 			do_action( 'woocommerce_add_to_cart', $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data );
 
-			$woocommerce->cart_has_contents_cookie( true );
-
+			$this->set_cart_cookies();
 			$this->calculate_totals();
 
 			return true;
@@ -919,6 +941,25 @@ class WC_Cart {
 			}
 
 			$this->calculate_totals();
+		}
+
+		/**
+		 * Set cart hash cookie and items in cart.
+		 *
+		 * @access private
+		 * @param bool $set (default: true)
+		 * @return void
+		 */
+		private function set_cart_cookies( $set = true ) {
+			if ( ! headers_sent() ) {
+				if ( $set ) {
+					setcookie( "woocommerce_items_in_cart", "1", 0, COOKIEPATH, COOKIE_DOMAIN, false );
+					setcookie( "woocommerce_cart_hash", md5( json_encode( $this->get_cart() ) ), 0, COOKIEPATH, COOKIE_DOMAIN, false );
+				} else {
+					setcookie( "woocommerce_items_in_cart", "0", time() - 3600, COOKIEPATH, COOKIE_DOMAIN, false );
+					setcookie( "woocommerce_cart_hash", "0", time() - 3600, COOKIEPATH, COOKIE_DOMAIN, false );
+				}
+			}
 		}
 
     /*-----------------------------------------------------------------------------------*/
@@ -1386,14 +1427,13 @@ class WC_Cart {
 
 								// Line subtotal + tax
 								$line_subtotal_tax 		= get_option('woocommerce_tax_round_at_subtotal') == 'no' ? $this->tax->round( $tax_amount ) : $tax_amount;
-								$line_subtotal			= $row_base_price - $this->tax->get_tax_total( $base_taxes );
+								$line_subtotal			= $row_base_price - array_sum( $base_taxes );
 
 								// Adjusted price
 								$adjusted_price 		= ( $row_base_price - array_sum( $base_taxes ) + array_sum( $taxes ) ) / $values['quantity'];
 
 								// Apply discounts
 								$discounted_price 		= $this->get_discounted_price( $values, $adjusted_price, true );
-
 								$discounted_taxes		= $this->tax->calc_tax( $discounted_price * $values['quantity'], $tax_rates, true );
 								$discounted_tax_amount	= array_sum( $discounted_taxes ); // Sum taxes
 
@@ -1447,7 +1487,6 @@ class WC_Cart {
 						$this->cart_contents[ $cart_item_key ]['line_tax'] 			= $line_tax;
 						$this->cart_contents[ $cart_item_key ]['line_subtotal'] 	= $line_subtotal;
 						$this->cart_contents[ $cart_item_key ]['line_subtotal_tax'] = $line_subtotal_tax;
-
 					}
 				}
 
@@ -1532,53 +1571,69 @@ class WC_Cart {
 				}
 			}
 
-			// Set tax total to sum of all tax rows
-			$this->tax_total = $this->tax->get_tax_total( $this->taxes );
-
-			// VAT exemption done at this point - so all totals are correct before exemption
-			if ( $woocommerce->customer->is_vat_exempt() ) {
-				$this->shipping_tax_total = $this->tax_total = 0;
-				$this->taxes = $this->shipping_taxes = array();
-
-				foreach ( $this->cart_contents as $cart_item_key => $item )
-					$this->cart_contents[ $cart_item_key ]['line_subtotal_tax'] = $this->cart_contents[ $cart_item_key ]['line_tax'] = 0;
-			}
-
-			// Cart Discounts (after tax)
-			$this->apply_cart_discounts_after_tax();
-
 			// Only calculate the grand total + shipping if on the cart/checkout
 			if ( is_checkout() || is_cart() || defined('WOOCOMMERCE_CHECKOUT') || defined('WOOCOMMERCE_CART') ) {
+
+				// Total up/round taxes
+				if ( get_option('woocommerce_tax_round_at_subtotal') == 'no' ) {
+					$this->tax_total          = $this->tax->get_tax_total( $this->taxes );
+					$this->taxes              = array_map( array( $this->tax, 'round' ), $this->taxes );
+				} else {
+					$this->tax_total          = array_sum( $this->taxes );
+				}
 
 				// Cart Shipping
 				$this->calculate_shipping();
 
-				// VAT exemption for shipping
-				if ( $woocommerce->customer->is_vat_exempt() ) {
-					$this->shipping_tax_total = 0;
-					$this->shipping_taxes = array();
+				// Total up/round taxes for shipping
+				if ( get_option('woocommerce_tax_round_at_subtotal') == 'no' ) {
+					$this->shipping_tax_total = $this->tax->get_tax_total( $this->shipping_taxes );
+					$this->shipping_taxes     = array_map( array( $this->tax, 'round' ), $this->shipping_taxes );
+				} else {
+					$this->shipping_tax_total = array_sum( $this->shipping_taxes );
 				}
 
-				// Round cart/shipping tax rows
-				$this->taxes = array_map( array( $this->tax, 'round' ), $this->taxes );
-				$this->shipping_taxes = array_map( array( $this->tax, 'round' ), $this->shipping_taxes );
+				// VAT exemption done at this point - so all totals are correct before exemption
+				if ( $woocommerce->customer->is_vat_exempt() )
+					$this->remove_taxes();
+
+				// Cart Discounts (after tax)
+				$this->apply_cart_discounts_after_tax();
 
 				// Allow plugins to hook and alter totals before final total is calculated
 				do_action( 'woocommerce_calculate_totals', $this );
 
-				/**
-				 * Grand Total
-				 *
-				 * Based on discounted product prices, discounted tax, shipping cost + tax, and any discounts to be added after tax (e.g. store credit)
-				 */
-				$this->total = apply_filters( 'woocommerce_calculated_total', number_format( $this->cart_contents_total + $this->tax_total + $this->shipping_tax_total + $this->shipping_total - $this->discount_total + $this->fee_total, $this->dp, '.', '' ), $this );
+				// Grand Total - Discounted product prices, discounted tax, shipping cost + tax, and any discounts to be added after tax (e.g. store credit)
+				$this->total = max( 0, apply_filters( 'woocommerce_calculated_total', number_format( $this->cart_contents_total + $this->tax_total + $this->shipping_tax_total + $this->shipping_total - $this->discount_total + $this->fee_total, $this->dp, '.', '' ), $this ) );
 
-				if ( $this->total < 0 )
-					$this->total = 0;
+			} else {
 
+				// Set tax total to sum of all tax rows
+				$this->tax_total = $this->tax->get_tax_total( $this->taxes );
+
+				// VAT exemption done at this point - so all totals are correct before exemption
+				if ( $woocommerce->customer->is_vat_exempt() )
+					$this->remove_taxes();
+
+				// Cart Discounts (after tax)
+				$this->apply_cart_discounts_after_tax();
 			}
 
 			$this->set_session();
+		}
+
+		/**
+		 * remove_taxes function.
+		 *
+		 * @access public
+		 * @return void
+		 */
+		public function remove_taxes() {
+			$this->shipping_tax_total = $this->tax_total = 0;
+			$this->taxes = $this->shipping_taxes = array();
+
+			foreach ( $this->cart_contents as $cart_item_key => $item )
+				$this->cart_contents[ $cart_item_key ]['line_subtotal_tax'] = $this->cart_contents[ $cart_item_key ]['line_tax'] = 0;
 		}
 
 		/**
@@ -1614,7 +1669,6 @@ class WC_Cart {
 			$this->shipping_total 		= $woocommerce->shipping->shipping_total;	// Shipping Total
 			$this->shipping_label 		= $woocommerce->shipping->shipping_label;	// Shipping Label
 			$this->shipping_taxes		= $woocommerce->shipping->shipping_taxes;	// Shipping Taxes
-			$this->shipping_tax_total 	= $this->tax->get_tax_total( $this->shipping_taxes );	// Shipping tax amount
 		}
 
 		/**
@@ -1768,9 +1822,13 @@ class WC_Cart {
 		 *
 		 * @return bool
 		 */
-		public function has_discount( $code ) {
-			if ( in_array( $code, $this->applied_coupons ) ) return true;
-			return false;
+		public function has_discount( $coupon_code ) {
+
+			// Sanitize coupon code
+			$coupon_code = apply_filters( 'woocommerce_coupon_code', $coupon_code );
+
+			// Check if its set
+			return in_array( $coupon_code, $this->applied_coupons );
 		}
 
 		/**
@@ -1786,6 +1844,10 @@ class WC_Cart {
 			if ( ! $woocommerce->cart->coupons_enabled() )
 				return false;
 
+			// Sanitize coupon code
+			$coupon_code = apply_filters( 'woocommerce_coupon_code', $coupon_code );
+
+			// Get the coupon
 			$the_coupon = new WC_Coupon( $coupon_code );
 
 			if ( $the_coupon->id ) {

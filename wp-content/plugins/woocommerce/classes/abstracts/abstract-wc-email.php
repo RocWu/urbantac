@@ -262,6 +262,16 @@ abstract class WC_Email extends WC_Settings_API {
 	}
 
 	/**
+	* Proxy to parent's get_option and attempt to localize the result using gettext.
+	*
+	* @access public
+	* @return string
+	*/
+	function get_option( $key, $empty_value = null ) {
+		return __( parent::get_option( $key, $empty_value ) );
+	}
+
+	/**
 	 * Checks if this email is enabled and will be sent.
 	 *
 	 * @access public

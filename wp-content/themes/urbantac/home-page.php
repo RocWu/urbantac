@@ -28,6 +28,10 @@ Template Name: Homepage Template
           </div>
         <?php endif; ?>
 
+        <div class="homepage-about">
+          <?php the_content(); ?>
+        </div>
+
         <?php if(get_field('featured_shop_images')): ?>
           <div class="homepage-featured-panes clearfix">
             <?php while(has_sub_field('featured_shop_images')):
@@ -41,18 +45,6 @@ Template Name: Homepage Template
               <?php endif; ?>
             <?php endwhile; ?>
           </div>
-        <?php endif; ?>
-
-        <?php if(get_field('affiliates')): ?>
-          <div class="homepage-affiliates clearfix">
-            <h3>Links</h3>
-            <?php while(has_sub_field('affiliates')):
-              $affiliateImage = get_sub_field('image'); ?>
-              <div class="affiliate">
-                <a href="<?php the_sub_field('link'); ?>" rel="nofollow" target="_blank"><img src="<?php echo $affiliateImage['url']; ?>" alt="<?php echo $affiliateImage['alt']; ?>"/></a>
-              </div>
-            <?php endwhile; ?>
-          </div> <!-- end .homepage-affiliates -->
         <?php endif; ?>
       <?php endwhile; endif; ?>
     </div> <!-- end #homepage-content -->

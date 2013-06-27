@@ -179,15 +179,11 @@ add_action('wp_ajax_nopriv_woocommerce_update_order_review', 'woocommerce_ajax_u
  * @return void
  */
 function woocommerce_ajax_add_to_cart() {
-
 	global $woocommerce;
 
-	check_ajax_referer( 'add-to-cart', 'security' );
-
-	$product_id = apply_filters('woocommerce_add_to_cart_product_id', absint( $_POST['product_id'] ) );
-	$quantity   = empty( $_POST['quantity'] ) ? 1 : apply_filters( 'woocommerce_stock_amount', $_POST['quantity'] );
-
-	$passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity );
+	$product_id        = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_POST['product_id'] ) );
+	$quantity          = empty( $_POST['quantity'] ) ? 1 : apply_filters( 'woocommerce_stock_amount', $_POST['quantity'] );
+	$passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
 
 	if ( $passed_validation && $woocommerce->cart->add_to_cart( $product_id, $quantity ) ) {
 
@@ -208,7 +204,7 @@ function woocommerce_ajax_add_to_cart() {
 		// If there was an error adding to the cart, redirect to the product page to show any errors
 		$data = array(
 			'error' => true,
-			'product_url' => apply_filters('woocommerce_cart_redirect_after_error', get_permalink( $product_id ), $product_id)
+			'product_url' => apply_filters( 'woocommerce_cart_redirect_after_error', get_permalink( $product_id ), $product_id )
 		);
 
 		$woocommerce->set_messages();
@@ -446,12 +442,12 @@ function woocommerce_save_attributes() {
 
 				if ( isset( $attribute_values[ $i ] ) ) {
 
-			 		// Format values
+			 		// Format values (slug format)
 			 		if ( is_array( $attribute_values[ $i ] ) ) {
-				 		$values = array_map( 'woocommerce_clean', array_map( 'stripslashes', $attribute_values[ $i ] ) );
+				 		$values = array_map( 'sanitize_title', array_map( 'stripslashes', $attribute_values[ $i ] ) );
 				 	} else {
 				 		// Text based, separate by pipe
-				 		$values = array_map( 'woocommerce_clean', array_map( 'stripslashes', explode( '|', $attribute_values[ $i ] ) ) );
+				 		$values = array_map( 'sanitize_title', array_map( 'stripslashes', explode( '|', $attribute_values[ $i ] ) ) );
 				 	}
 
 				 	// Remove empty items in the array
@@ -632,10 +628,10 @@ function woocommerce_link_all_variations() {
 				$options[] = $term->slug;
 			}
 		} else {
-			$options = explode('|', $attribute['value']);
+			$options = explode( '|', $attribute['value'] );
 		}
 
-		$options = array_map('trim', $options);
+		$options = array_map( 'sanitize_title', array_map( 'trim', $options ) );
 
 		$variations[ $attribute_field_name ] = $options;
 	}
@@ -728,7 +724,8 @@ function woocommerce_link_all_variations() {
 	foreach ( $possible_variations as $variation ) {
 
 		// Check if variation already exists
-		if ( in_array( $variation, $available_variations ) ) continue;
+		if ( in_array( $variation, $available_variations ) )
+			continue;
 
 		$variation_id = wp_insert_post( $variation_post_data );
 
@@ -742,8 +739,8 @@ function woocommerce_link_all_variations() {
 
 		do_action( 'product_variation_linked', $variation_id );
 
-		if ( $added > WC_MAX_LINKED_VARIATIONS ) break;
-
+		if ( $added > WC_MAX_LINKED_VARIATIONS )
+			break;
 	}
 
 	$woocommerce->clear_product_transients( $post_id );

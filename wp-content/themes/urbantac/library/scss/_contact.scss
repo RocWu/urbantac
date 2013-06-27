@@ -27,12 +27,17 @@
   }
 }
 
+span.separator {
+  color: $linkColor;
+}
+
 .facebook-inset {
-  height: pxtoem(75px, $bodyFontSize);
+  width: 75%;
+  height: pxtoem(59px, $bodyFontSize);
   text-align: center;
   background-color: #5f5647;
   @include border-radius(6px);
-  margin-top: pxtoem(10px, $bodyFontSize);
+  margin: pxtoem(10px, $bodyFontSize) auto 0 auto;
 
   a {
     color: $hoverLinkColor;
@@ -43,10 +48,10 @@
   }
 
   span {
-    font-size: 1.5em;
+    font-size: 1.15em;
     display:block;
     margin: 0;
-    line-height: pxtoem(75px, 24px);
+    line-height: pxtoem(59px, 18.4px);
 
     .icon-facebook-sign {
       vertical-align: middle;
@@ -68,9 +73,13 @@
   }
 
   .address {
-    margin-top: 0;
+    margin: 0;
     font-size: 1.5em;
     font-weight: 200;
+  }
+
+  .hours {
+    margin-top: 0;
   }
 }
 

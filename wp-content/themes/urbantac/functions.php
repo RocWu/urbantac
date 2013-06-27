@@ -165,14 +165,31 @@ function bones_wpsearch($form) {
 remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
 
-// remove breadcrumb on main shop page
-//remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0);
-
-// remove sidebar
-//remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
+// Move breadcrumbs
+remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
+add_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
 
 add_action('woocommerce_before_main_content', 'urbantac_wrapper_start', 10);
 add_action('woocommerce_after_main_content', 'urbantac_wrapper_end', 10);
+
+// Remove unwanted tabs
+add_filter( 'woocommerce_product_tabs', 'woo_remove_product_tabs', 98 );
+
+// 12 products per page
+add_filter( 'loop_shop_per_page', create_function( '$cols', 'return 12;' ), 20 );
+
+// rename the description tab to be blank
+/*add_filter( 'woocommerce_product_tabs', 'woo_rename_tabs', 98 );
+function woo_rename_tabs( $tabs ) {
+ 
+    $tabs['description']['title'] = __( '' );       // Rename the description tab
+ 
+    return $tabs;
+ 
+}*/
+
+// add woocommerce support
+add_theme_support( 'woocommerce' );
 
 function urbantac_wrapper_start() {
   echo '<div id="products-content" class="products wrap clearfix aligncenter content-container">';
@@ -180,6 +197,14 @@ function urbantac_wrapper_start() {
  
 function urbantac_wrapper_end() {
   echo '</div> <!-- end #products-content -->';
+}
+
+function woo_remove_product_tabs( $tabs ) {
+    unset( $tabs['description'] );          // Remove the description tab
+    unset( $tabs['reviews'] );          // Remove the reviews tab
+    unset( $tabs['additional_information'] );   // Remove the additional information tab
+ 
+    return $tabs;
 }
 
 

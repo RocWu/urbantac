@@ -1,17 +1,198 @@
+$productLinkFontSize: pxtoem(14px, $bodyFontSize);
+$productLinkLineHeight: pxtoem(16px, $bodyFontSize);
+
 .products.content-container {
   padding: pxtoem(10px, $bodyFontSize);
 }
 
-#products-content.products {
-  .product {
-    .images {
-      float: left;
-      width: 50%;
-    }
+.woocommerce-breadcrumb {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-    .summary {
-      width: 50%;
-      float: left;
+.single-product-main {
+  margin-top: pxtoem(10px, $bodyFontSize);
+
+  h1, h2, h3 {
+    font-weight: 200;
+  }
+
+  .onsale {
+    color: red;
+    font-size: 1.5em;
+    font-weight: 400;
+  }
+  .images {
+    float: left;
+    width: 50%;
+  }
+
+  .summary {
+    width: 50%;
+    float: left;
+
+    margin-bottom: pxtoem(20px, $bodyFontSize);
+  }
+
+  p.price {
+    del span {
+      vertical-align: middle;
+    }
+    ins span {
+      vertical-align: middle;
+      font-weight: 400;
+      color: red;
+      font-size: 1.50em;
     }
   }
+
+  .related.products {
+    clear: both;
+    margin-top: pxtoem(40px, $bodyFontSize);
+    ul.products li {
+      width: 170px;
+      height: 225px;
+
+      font-size: $productLinkFontSize;
+      line-height: $productLinkLineHeight;
+
+      float: left;
+      margin-bottom: pxtoem(10px, $bodyFontSize);
+      padding: 0 10px;
+
+      h3 {
+        max-height: $productLinkLineHeight * 4;
+        font-size: 1em;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+  }
+}
+
+#products-content.products {
+
+  .sidebar {
+    padding-right: 10px;
+    float: left;
+    width: pxtoem(192px, $bodyFontSize);
+
+    h4 {
+      font-weight: 200;
+      font-size: 1.5em;
+      margin: 10px 0;
+    }
+
+    ul.product-categories {
+      font-size: 1.25em;
+      margin: pxtoem(10px, $bodyFontSize) 0;
+
+      li {
+        border: 0 dashed #bfa67e;
+        border-width: 1px 0 1px 0;
+        margin: -1px 0; // collapse the borders
+        padding: 0.125em 0;
+
+        & a:hover {
+          text-decoration: none;
+        }
+      }
+
+      .cat-item {
+        font-weight: 200;
+
+        .children {
+          display: none;
+        }
+      }
+
+      .current-cat {
+        a {
+          color: $hoverLinkColor;
+        }
+
+        .children a {
+          color: $linkColor;
+        }
+      }
+
+      .current-cat, .current-cat-parent {
+        font-weight: 400;
+
+        .children {
+          display: block;
+        }
+      }
+
+      ul.children {
+        text-indent: 10px;
+        margin: 0;
+        //margin: 0 0 0 pxtoem(10px, $bodyFontSize);
+        li {
+          color: $linkColor;
+          //list-style: disc;
+          //list-style-position: inside;
+          font-size: .75em;
+          border: none;
+
+          &:hover {
+            color: $hoverLinkColor;
+          }
+        }
+      }
+    }
+  }
+
+  .products-main {
+    padding-left: 10px;
+    float: right;
+    width: 748px;
+
+    .products {
+      .product {
+        width: 170px;
+        height: 225px;
+
+        font-size: $productLinkFontSize;
+        line-height: $productLinkLineHeight;
+
+        float: left;
+        margin-bottom: pxtoem(10px, $bodyFontSize);
+        padding: 0 10px;
+
+        h3 {
+          max-height: $productLinkLineHeight * 4;
+          font-size: 1em;
+          margin: 0;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+
+  .woocommerce-pagination {
+    text-align: center;
+    ul.page-numbers {
+      display: inline-block;
+      font-size: 1.5em;
+
+      li {
+        float: left;
+
+        span, a {
+          padding: 5px;
+          line-height: 1.10em;
+          margin: 0 5px;
+
+          display: inline-block;
+        }
+      }
+    }
+  }
+  
 }
