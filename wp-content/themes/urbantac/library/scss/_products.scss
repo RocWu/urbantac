@@ -36,7 +36,12 @@ $productLinkLineHeight: pxtoem(16px, $bodyFontSize);
   }
 
   p.price {
+    span.amount {
+      font-size: 1.25em;
+    }
+
     del span {
+      font-size: 1em;
       vertical-align: middle;
     }
     ins span {
@@ -47,9 +52,16 @@ $productLinkLineHeight: pxtoem(16px, $bodyFontSize);
     }
   }
 
+  div.summary {
+    ul {
+      list-style-type: disc;
+      margin-left: pxtoem(18px, $bodyFontSize);
+    }
+  }
+
   .related.products {
     clear: both;
-    margin-top: pxtoem(40px, $bodyFontSize);
+    padding-top: pxtoem(40px, $bodyFontSize);
     ul.products li {
       width: 170px;
       height: 225px;
@@ -153,6 +165,11 @@ $productLinkLineHeight: pxtoem(16px, $bodyFontSize);
     float: right;
     width: 748px;
 
+    .msrp-note {
+      font-size: 0.75em;
+      font-weight: bold;
+    }
+
     .products {
       .product {
         width: 170px;
@@ -194,5 +211,11 @@ $productLinkLineHeight: pxtoem(16px, $bodyFontSize);
       }
     }
   }
-  
+}
+
+// lightbox
+.pp_pic_holder {
+  .ppt {
+    display: none !important;
+  }
 }

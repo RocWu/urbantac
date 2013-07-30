@@ -99,6 +99,7 @@ function woocommerce_sanitize_taxonomy_name( $taxonomy ) {
 	$taxonomy = preg_replace( '/&.+?;/', '', $taxonomy ); // Kill entities
 	$taxonomy = str_replace( array( '.', '\'', '"' ), '', $taxonomy ); // Kill quotes and full stops.
 	$taxonomy = str_replace( array( ' ', '_' ), '-', $taxonomy ); // Replace spaces and underscores.
+
 	return $taxonomy;
 }
 
@@ -406,8 +407,11 @@ if ( ! function_exists( 'woocommerce_disable_admin_bar' ) ) {
  * @param mixed $user
  * @return void
  */
-function woocommerce_load_persistent_cart( $user_login, $user ) {
+function woocommerce_load_persistent_cart( $user_login, $user = 0 ) {
 	global $woocommerce;
+
+	if ( ! $user )
+		return;
 
 	$saved_cart = get_user_meta( $user->ID, '_woocommerce_persistent_cart', true );
 
@@ -436,6 +440,19 @@ if ( ! function_exists( 'is_shop' ) ) {
 	 */
 	function is_shop() {
 		return ( is_post_type_archive( 'product' ) || is_page( woocommerce_get_page_id( 'shop' ) ) ) ? true : false;
+	}
+}
+
+if ( ! function_exists( 'is_product_taxonomy' ) ) {
+
+	/**
+	 * is_product_taxonomy - Returns true when viewing a product taxonomy archive.
+	 *
+	 * @access public
+	 * @return bool
+	 */
+	function is_product_taxonomy() {
+		return is_tax( get_object_taxonomies( 'product' ) );
 	}
 }
 
@@ -700,6 +717,7 @@ function get_woocommerce_currencies() {
 				'PLN' => __( 'Polish Zloty', 'woocommerce' ),
 				'GBP' => __( 'Pounds Sterling', 'woocommerce' ),
 				'RON' => __( 'Romanian Leu', 'woocommerce' ),
+				'RUB' => __( 'Russian Ruble', 'woocommerce' ),
 				'SGD' => __( 'Singapore Dollar', 'woocommerce' ),
 				'ZAR' => __( 'South African rand', 'woocommerce' ),
 				'SEK' => __( 'Swedish Krona', 'woocommerce' ),
@@ -744,6 +762,9 @@ function get_woocommerce_currency_symbol( $currency = '' ) {
 		case 'RMB' :
 		case 'JPY' :
 			$currency_symbol = '&yen;';
+			break;
+		case 'RUB' :
+			$currency_symbol = '&#1088;&#1091;&#1073;.';
 			break;
 		case 'KRW' : $currency_symbol = '&#8361;'; break;
 		case 'TRY' : $currency_symbol = '&#84;&#76;'; break;
@@ -1204,7 +1225,7 @@ function woocommerce_downloadable_product_permissions( $order_id ) {
 		if ($item['product_id']>0) :
 			$_product = $order->get_product_from_item( $item );
 
-			if ( $_product->exists() && $_product->is_downloadable() ) :
+			if ( $_product && $_product->exists() && $_product->is_downloadable() ) :
 
 				$product_id = ($item['variation_id']>0) ? $item['variation_id'] : $item['product_id'];
 
@@ -1288,6 +1309,17 @@ function woocommerce_downloadable_file_permission( $download_id, $product_id, $o
 if ( get_option('woocommerce_downloads_grant_access_after_payment') == 'yes' )
 	add_action( 'woocommerce_order_status_processing', 'woocommerce_downloadable_product_permissions' );
 
+/**
+ * Gets the filename part of a download URL
+ *
+ * @access public
+ * @param string $file_url
+ * @return string
+ */
+function woocommerce_get_filename_from_url( $file_url ) {
+	$parts = parse_url( $file_url );
+	return basename( $parts['path'] );
+}
 
 /**
  * Order Status completed - This is a paying customer
@@ -1460,6 +1492,10 @@ function woocommerce_get_product_terms( $object_id, $taxonomy, $fields = 'all' )
 
 	$terms 			= array();
 	$object_terms 	= get_the_terms( $object_id, $taxonomy );
+
+	if ( ! is_array( $object_terms ) )
+		return array();
+	
 	$all_terms 		= array_flip( get_terms( $taxonomy, array( 'menu_order' => 'ASC', 'fields' => 'ids' ) ) );
 
 	switch ( $fields ) {
@@ -2046,6 +2082,8 @@ function woocommerce_delete_order_item( $item_id ) {
 	if ( ! $item_id )
 		return false;
 
+	do_action( 'woocommerce_before_delete_order_item', $item_id );
+
 	$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_id = %d", $item_id ) );
 	$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE order_item_id = %d", $item_id ) );
 
@@ -2470,3 +2508,22 @@ function woocommerce_cancel_unpaid_orders() {
 }
 
 add_action( 'woocommerce_cancel_unpaid_orders', 'woocommerce_cancel_unpaid_orders' );
+
+/**
+ * woocommerce_clear_comment_rating_transients function.
+ *
+ * @access public
+ * @param mixed $comment_id
+ * @return void
+ */
+function woocommerce_clear_comment_rating_transients( $comment_id ) {
+	$comment = get_comment( $comment_id );
+
+	if ( ! empty( $comment->comment_post_ID ) ) {
+		delete_transient( 'wc_average_rating_' . absint( $comment->comment_post_ID ) );
+		delete_transient( 'wc_rating_count_' . absint( $comment->comment_post_ID ) );
+	}
+}
+
+add_action( 'wp_set_comment_status', 'woocommerce_clear_comment_rating_transients' );
+add_action( 'edit_comment', 'woocommerce_clear_comment_rating_transients' );

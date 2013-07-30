@@ -3,8 +3,8 @@ Contributors: woothemes, mikejolley, jameskoster, CoenJacobs
 Tags: ecommerce, e-commerce, commerce, woothemes, wordpress ecommerce, affiliate, store, sales, sell, shop, shopping, cart, checkout, configurable, variable, widgets, reports, download, downloadable, digital, inventory, stock, reports, shipping, tax
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal@woothemes.com&item_name=Donation+for+WooCommerce
 Requires at least: 3.5
-Tested up to: 3.5
-Stable tag: 2.0.7
+Tested up to: 3.6 beta 3
+Stable tag: 2.0.12
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -134,13 +134,13 @@ WordPress.org is home to some cool free extensions too ([search WordPress.org fo
 
 For help setting up and configuring WooCommerce please refer to our [user guide](http://docs.woothemes.com/document/woocommerce/)
 
-For extending or theming WooCommerce, see our [developer documentation](http://docs.woothemes.com/product/woocommerce-plugin/developer-reference/).
+For extending or theming WooCommerce, see our [codex](http://docs.woothemes.com/documentation/plugins/woocommerce/woocommerce-codex/).
 
 If you get stuck and you're not a WooThemes customer, you can ask for help on the [Community Forums](http://wordpress.org/support/plugin/woocommerce).
 
 = Will WooCommerce work with my theme? =
 
-Yes; WooCommerce will work with any theme, but may require some styling to make it match nicely. Please see our [developer documentation](http://docs.woothemes.com/product/woocommerce-plugin/developer-reference/) for help.
+Yes; WooCommerce will work with any theme, but may require some styling to make it match nicely. Please see our [codex](http://docs.woothemes.com/documentation/plugins/woocommerce/woocommerce-codex/) for help.
 
 = Where can I request new features, eCommerce themes and extensions? =
 
@@ -164,6 +164,76 @@ Yes you can! Join in on our [GitHub repository](http://github.com/woothemes/wooc
 6. A product archive (grid).
 
 == Changelog ==
+
+= 2.0.12 - 17/06/2013 =
+* Tweak - Add actions for attribute create/update/delete
+* Fix - Fixed bug in cross sells loading in product data write panel
+* Fix - Fixed posting shipping method when only one is available
+* Fix - Fixed query breaking when using some product widgets
+
+= 2.0.11 - 13/06/2013 =
+* Tweak - Handling for multiselect fields on checkout, and a filter for third party handling
+* Fix - Duplicate param keys for sale_product shortcodes
+* Fix - Google Analytics tracking use get_order_number() method instead of id
+* Fix - Replaced jQuery placeholder plugin to provide support in older browsers
+* Fix - Rounding for mijireh tax ex. price
+* Fix - Fixed is_on_sale function for products without prices
+* Fix - Updated blockui to prevent errors in WP 3.6
+* Fix - Extra data sanitization in some places
+* Fix - Offer tax class option per variation to use same tax class as parent
+
+= 2.0.10 - 15/05/2013 =
+* Tweak - Searching for SKU in admin panel can also be done via lowercase 'sku:' instead of just 'SKU:'
+* Fix - Cast term_id as int in product data write panel that will resolve issues with numerical attributes
+* Fix - Correct label for RUB symbol - added a dot after it
+* Fix - Javascript escapes to stop breaking scripts when used with translations
+* Fix - PayPal button should use classes 'button' and 'alt', not 'button-alt'
+* Fix - Have the remove_taxes() method set subtotal to subtotal_ex_tax
+* Fix - Allow layered nav to work with non pa_ prepended taxonomies
+* Fix - Better backwards compatibility with _woocommerce_exclude_image
+* Fix - is_on_sale() method now returns true for products with a sale product of 0
+* Fix - For when get_the_terms() returns false inside woocommerce_get_product_terms()
+* Fix - PayPal has a 9 item limit
+* Fix - Replace deprecated wp_convert_bytes_to_hr() with size_format()
+
+= 2.0.9 - 02/05/2013 =
+* Feature - Added is_product_taxonomy() conditonal.
+* Tweak - Notices during checkout for admin users if the checkout is mis-configured.
+* Tweak - Named charts on report page to make modifications easier.
+* Tweak - woocommerce_before_delete_order_item hook.
+* Fix - Disable autocomplete for checkout fields which refresh totals - no events get fired on autocomplete.
+* Fix - Clear rating transients when editing comments.
+* Fix - Screen ids when plugin name localised.
+* Fix - Brazillian state code BH -> BA. Data update required to update old values in orders.
+* Fix - Fix incorrect CSS class being output in product image gallery.
+* Fix - Mijireh page slurp.
+* Fix - woocommerce_downloadable_product_name filter fixes.
+* Fix - Pass order number to google analytics, not id
+* Fix - check_jquery in WP 3.6 beta
+* Fix - GA click tracking moved code to footer.
+* Localization - Netherlands, Hungarian, Taiwan, Italian, CZ, Spanish, Catalan updates.
+* Localization - Slovak translation by Dusan Belescak.
+* Localization - Added RUB currency.
+* Other minor fixes and localisation updates.
+
+= 2.0.8 - 17/04/2013 =
+* Feature - Related products shortcode.
+* Tweak - Order item meta - skip serialized fields.
+* Tweak - Support for the city field in shipping calc (filterable).
+* Tweak - use base_country for tax calculations in manually created orders.
+* Tweak - Download permissions meta box show cleaner filenames.
+* Fix - Updated shareyourcart SDK.
+* Fix - moved woocommerce_get_filename_from_url to core-functions as it is required in admin too.
+* Fix - checkmark after adding to cart multiple times.
+* Fix - Saving text attributes. Posted 'text' terms are not slugs. Only striptags/slashes - don't change to slugs.
+* Fix - Insert URL button when working with multiple variations.
+* Fix - Undefined found_shipping_classes in flat rate shipping.
+* Fix - Fix saving options for attribute taxonomies containing special chars.
+* Fix - Prevent empty meta queries.
+* Localization - Norwegian updates by Tore Hjartland
+* Localization - Spanish updates by Laguna Sanchez
+* Localization - Romanian updates by Aurel Roman
+* Localization - Finnish updates by arhipaiva
 
 = 2.0.7 - 12/04/2013 =
 * Feature - Option for GA _setDomainName.

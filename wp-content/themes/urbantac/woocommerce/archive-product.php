@@ -35,6 +35,7 @@ get_header('shop'); ?>
       <?php do_action( 'woocommerce_archive_description' ); ?>
 
       <h1 class="page-title"><?php woocommerce_page_title(); ?></h1>
+      <span class="msrp-note">Note: All prices are MSRP and subject to change.  Some of these products will be special order.  Please visit us at the shop for more information on a specific product.</span>
 
       <?php if ( have_posts() ) : ?>
 

@@ -1,4 +1,10 @@
 *** WooThemes Updater Changelog ***
+2013.06.12 - version 1.1.1
+ * Bug fixes.
+
+2013.05.29 - version 1.1.0
+ * Update notifications without license.
+ * Better NetWork integration.
 
 2013.02.01 - version 1.0.4
  * woothemes-updater.php - Trailing Space cleanup.

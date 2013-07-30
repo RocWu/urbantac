@@ -175,8 +175,11 @@ add_action('woocommerce_after_main_content', 'urbantac_wrapper_end', 10);
 // Remove unwanted tabs
 add_filter( 'woocommerce_product_tabs', 'woo_remove_product_tabs', 98 );
 
-// 12 products per page
-add_filter( 'loop_shop_per_page', create_function( '$cols', 'return 12;' ), 20 );
+// 36 products per page
+add_filter( 'loop_shop_per_page', create_function( '$cols', 'return 36;' ), 20 );
+
+// Remove sorting option
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30);
 
 // rename the description tab to be blank
 /*add_filter( 'woocommerce_product_tabs', 'woo_rename_tabs', 98 );

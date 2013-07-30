@@ -16,7 +16,6 @@ of the styles inside media queries.
 /*
  * Corrects `block` display not defined in IE6/7/8/9 & FF3.
  */
-/* line 21, ../scss/_normalize.scss */
 article,
 aside,
 details,
@@ -34,7 +33,6 @@ summary {
 /*
  * Corrects `inline-block` display not defined in IE6/7/8/9 & FF3.
  */
-/* line 31, ../scss/_normalize.scss */
 audio,
 canvas,
 video {
@@ -47,7 +45,6 @@ video {
  * Prevents modern browsers from displaying `audio` without controls.
  * Remove excess height in iOS5 devices.
  */
-/* line 42, ../scss/_normalize.scss */
 audio:not([controls]) {
   display: none;
   height: 0;
@@ -57,7 +54,6 @@ audio:not([controls]) {
  * Addresses styling for `hidden` attribute not present in IE7/8/9, FF3, S4.
  * Known issue: no IE6 support.
  */
-/* line 52, ../scss/_normalize.scss */
 [hidden] {
   display: none;
 }
@@ -71,7 +67,6 @@ audio:not([controls]) {
  * 2. Prevents iOS text size adjust after orientation change, without disabling
  *    user zoom.
  */
-/* line 67, ../scss/_normalize.scss */
 html {
   font-size: 100%;
   /* 1 */
@@ -85,7 +80,6 @@ html {
  * Addresses `font-family` inconsistency between `textarea` and other form
  * elements.
  */
-/* line 82, ../scss/_normalize.scss */
 html,
 button,
 input,
@@ -97,7 +91,6 @@ textarea {
 /*
  * Addresses margins handled incorrectly in IE6/7.
  */
-/* line 90, ../scss/_normalize.scss */
 body {
   margin: 0;
 }
@@ -108,7 +101,6 @@ body {
 /*
  * Addresses `outline` inconsistency between Chrome and other browsers.
  */
-/* line 102, ../scss/_normalize.scss */
 a:focus {
   outline: thin dotted;
 }
@@ -117,7 +109,6 @@ a:focus {
  * Improves readability when focused and also mouse hovered in all browsers.
  * people.opera.com/patrickl/experiments/keyboard/test
  */
-/* line 112, ../scss/_normalize.scss */
 a:active,
 a:hover {
   outline: 0;
@@ -130,36 +121,30 @@ a:hover {
  * Addresses font sizes and margins set differently in IE6/7.
  * Addresses font sizes within `section` and `article` in FF4+, Chrome, S5.
  */
-/* line 125, ../scss/_normalize.scss */
 h1 {
   font-size: 2.5em;
 }
 
-/* line 129, ../scss/_normalize.scss */
 h2 {
   font-size: 1.5em;
   margin: 0.83em 0;
 }
 
-/* line 134, ../scss/_normalize.scss */
 h3 {
   font-size: 1.17em;
   margin: 1em 0;
 }
 
-/* line 139, ../scss/_normalize.scss */
 h4 {
   font-size: 1em;
   margin: 1.33em 0;
 }
 
-/* line 144, ../scss/_normalize.scss */
 h5 {
   font-size: 0.83em;
   margin: 1.67em 0;
 }
 
-/* line 149, ../scss/_normalize.scss */
 h6 {
   font-size: 0.75em;
   margin: 2.33em 0;
@@ -168,7 +153,6 @@ h6 {
 /*
  * Addresses styling not present in IE7/8/9, S5, Chrome.
  */
-/* line 158, ../scss/_normalize.scss */
 abbr[title] {
   border-bottom: 1px dotted;
 }
@@ -176,13 +160,11 @@ abbr[title] {
 /*
  * Addresses style set to `bolder` in FF3+, S4/5, Chrome.
  */
-/* line 167, ../scss/_normalize.scss */
 b,
 strong {
   font-weight: bold;
 }
 
-/* line 171, ../scss/_normalize.scss */
 blockquote {
   margin: 1em 40px;
 }
@@ -190,7 +172,6 @@ blockquote {
 /*
  * Addresses styling not present in S5, Chrome.
  */
-/* line 179, ../scss/_normalize.scss */
 dfn {
   font-style: italic;
 }
@@ -198,7 +179,6 @@ dfn {
 /*
  * Addresses styling not present in IE6/7/8/9.
  */
-/* line 187, ../scss/_normalize.scss */
 mark {
   background: #ff0;
   color: #000;
@@ -207,12 +187,10 @@ mark {
 /*
  * Addresses margins set differently in IE6/7.
  */
-/* line 196, ../scss/_normalize.scss */
 pre {
   margin: 1em 0;
 }
 
-/* line 199, ../scss/_normalize.scss */
 p {
   margin: 0;
 }
@@ -221,20 +199,18 @@ p {
  * Corrects font family set oddly in IE6, S4/5, Chrome.
  * en.wikipedia.org/wiki/User:Davidgothberg/Test59
  */
-/* line 211, ../scss/_normalize.scss */
 code,
 kbd,
 pre,
 samp {
   font-family: monospace, serif;
-  _font-family: "courier new", monospace;
+  _font-family: 'courier new', monospace;
   font-size: 1em;
 }
 
 /*
  * Improves readability of pre-formatted text in all browsers.
  */
-/* line 221, ../scss/_normalize.scss */
 pre {
   white-space: pre;
   white-space: pre-wrap;
@@ -244,7 +220,6 @@ pre {
 /*
  * Addresses CSS quotes not supported in IE6/7.
  */
-/* line 231, ../scss/_normalize.scss */
 q {
   quotes: none;
 }
@@ -252,14 +227,12 @@ q {
 /*
  * Addresses `quotes` property not supported in S4.
  */
-/* line 240, ../scss/_normalize.scss */
 q:before,
 q:after {
   content: '';
   content: none;
 }
 
-/* line 245, ../scss/_normalize.scss */
 small {
   font-size: 75%;
 }
@@ -268,7 +241,6 @@ small {
  * Prevents `sub` and `sup` affecting `line-height` in all browsers.
  * gist.github.com/413930
  */
-/* line 255, ../scss/_normalize.scss */
 sub,
 sup {
   font-size: 75%;
@@ -277,12 +249,10 @@ sup {
   vertical-align: baseline;
 }
 
-/* line 262, ../scss/_normalize.scss */
 sup {
   top: -0.5em;
 }
 
-/* line 266, ../scss/_normalize.scss */
 sub {
   bottom: -0.25em;
 }
@@ -293,7 +263,6 @@ sub {
 /*
  * Addresses margins set differently in IE6/7.
  */
-/* line 281, ../scss/_normalize.scss */
 dl,
 menu,
 ol,
@@ -301,7 +270,6 @@ ul {
   margin: 1em 0;
 }
 
-/* line 285, ../scss/_normalize.scss */
 dd {
   margin: 0 0 0 40px;
 }
@@ -309,7 +277,6 @@ dd {
 /*
  * Addresses paddings set differently in IE6/7.
  */
-/* line 295, ../scss/_normalize.scss */
 menu,
 ol,
 ul {
@@ -319,7 +286,6 @@ ul {
 /*
  * Corrects list images handled incorrectly in IE7.
  */
-/* line 304, ../scss/_normalize.scss */
 nav ul,
 nav ol {
   list-style: none;
@@ -334,7 +300,6 @@ nav ol {
  * 2. Improves image quality when scaled in IE7.
  *    code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/
  */
-/* line 319, ../scss/_normalize.scss */
 img {
   border: 0;
   /* 1 */
@@ -345,7 +310,6 @@ img {
 /*
  * Corrects overflow displayed oddly in IE9.
  */
-/* line 328, ../scss/_normalize.scss */
 svg:not(:root) {
   overflow: hidden;
 }
@@ -356,7 +320,6 @@ svg:not(:root) {
 /*
  * Addresses margin not present in IE6/7/8/9, S5, O11.
  */
-/* line 340, ../scss/_normalize.scss */
 figure {
   margin: 0;
 }
@@ -367,7 +330,6 @@ figure {
 /*
  * Corrects margin displayed oddly in IE6/7.
  */
-/* line 352, ../scss/_normalize.scss */
 form {
   margin: 0;
 }
@@ -375,9 +337,8 @@ form {
 /*
  * Define consistent border, margin, and padding.
  */
-/* line 360, ../scss/_normalize.scss */
 fieldset {
-  border: 1px solid silver;
+  border: 1px solid #c0c0c0;
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
 }
@@ -387,7 +348,6 @@ fieldset {
  * 2. Corrects text not wrapping in FF3.
  * 3. Corrects alignment displayed oddly in IE6/7.
  */
-/* line 372, ../scss/_normalize.scss */
 legend {
   border: 0;
   /* 1 */
@@ -403,7 +363,6 @@ legend {
  * 2. Addresses margins set differently in IE6/7, FF3+, S5, Chrome.
  * 3. Improves appearance and consistency in all browsers.
  */
-/* line 388, ../scss/_normalize.scss */
 button,
 input,
 select,
@@ -422,7 +381,6 @@ textarea {
  * Addresses FF3/4 setting `line-height` on `input` using `!important` in the
  * UA stylesheet.
  */
-/* line 401, ../scss/_normalize.scss */
 button,
 input {
   line-height: normal;
@@ -437,7 +395,6 @@ input {
  * 4. Removes inner spacing in IE7 without affecting normal text inputs.
  *    Known issue: inner spacing remains in IE6.
  */
-/* line 418, ../scss/_normalize.scss */
 button,
 html input[type="button"],
 input[type="reset"],
@@ -453,7 +410,6 @@ input[type="submit"] {
 /*
  * Re-set default cursor for disabled elements.
  */
-/* line 429, ../scss/_normalize.scss */
 button[disabled],
 input[disabled] {
   cursor: default;
@@ -465,7 +421,6 @@ input[disabled] {
  * 3. Removes excess padding in IE7.
  *    Known issue: excess padding remains in IE6.
  */
-/* line 441, ../scss/_normalize.scss */
 input[type="checkbox"],
 input[type="radio"] {
   box-sizing: border-box;
@@ -483,7 +438,6 @@ input[type="radio"] {
  * 2. Addresses `box-sizing` set to `border-box` in S5, Chrome (include `-moz`
  *    to future-proof).
  */
-/* line 454, ../scss/_normalize.scss */
 input[type="search"] {
   -webkit-appearance: textfield;
   /* 1 */
@@ -496,7 +450,6 @@ input[type="search"] {
 /*
  * Removes inner padding and search cancel button in S5, Chrome on OS X.
  */
-/* line 466, ../scss/_normalize.scss */
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
@@ -505,7 +458,6 @@ input[type="search"]::-webkit-search-decoration {
 /*
  * Removes inner padding and border in FF3+.
  */
-/* line 475, ../scss/_normalize.scss */
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
@@ -516,7 +468,6 @@ input::-moz-focus-inner {
  * 1. Removes default vertical scrollbar in IE6/7/8/9.
  * 2. Improves readability and alignment in all browsers.
  */
-/* line 485, ../scss/_normalize.scss */
 textarea {
   overflow: auto;
   /* 1 */
@@ -530,7 +481,6 @@ textarea {
 /*
  * Remove most spacing between table cells.
  */
-/* line 498, ../scss/_normalize.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -542,7 +492,6 @@ I added these extra styles as a more personalized reset. Feel free
 to remove them if you like or add your own. If you want to update
 the normalize styles, make sure to edit from this point up.
 ******************************************************************/
-/* line 511, ../scss/_normalize.scss */
 p {
   -webkit-hyphens: auto;
   -epub-hyphens: auto;
@@ -550,33 +499,27 @@ p {
   hyphens: auto;
 }
 
-/* line 518, ../scss/_normalize.scss */
 b, strong, .strong {
   font-weight: bold;
 }
 
-/* line 520, ../scss/_normalize.scss */
 dfn, em, .em {
   font-style: italic;
 }
 
-/* line 522, ../scss/_normalize.scss */
 small, .small {
   font-size: 75%;
 }
 
-/* line 524, ../scss/_normalize.scss */
 ul, ol {
   padding: 0;
   list-style-type: none;
 }
 
-/* line 529, ../scss/_normalize.scss */
 dd {
   margin: 0;
 }
 
-/* line 535, ../scss/_normalize.scss */
 .sidebar ul,
 .sidebar ol,
 .commentlist {
@@ -602,16 +545,13 @@ remember less is more.
 /*********************
 CLEARFIXIN'
 *********************/
-/* line 23, ../scss/_mixins.scss */
 .clearfix {
   zoom: 1;
 }
-/* line 25, ../scss/_mixins.scss */
 .clearfix:before, .clearfix:after {
   content: "";
   display: table;
 }
-/* line 26, ../scss/_mixins.scss */
 .clearfix:after {
   clear: both;
 }
@@ -619,14 +559,12 @@ CLEARFIXIN'
 /*********************
 TOOLS
 *********************/
-/* line 34, ../scss/_mixins.scss */
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-/* line 41, ../scss/_mixins.scss */
 .image-replacement {
   text-indent: 100%;
   white-space: nowrap;
@@ -668,53 +606,44 @@ TYPOGRAPHY
 use the best ampersand
 http://simplebits.com/notebook/2008/08/14/ampersands-2/
 */
-/* line 107, ../scss/_mixins.scss */
 span.amp {
-  font-family: Baskerville, "Goudy Old Style", Palatino, "Book Antiqua", serif !important;
+  font-family: Baskerville,'Goudy Old Style',Palatino,'Book Antiqua',serif !important;
   font-style: italic;
 }
 
-/* line 113, ../scss/_mixins.scss */
 .text-left {
   text-align: left;
 }
 
-/* line 114, ../scss/_mixins.scss */
 .text-center {
   text-align: center;
 }
 
-/* line 115, ../scss/_mixins.scss */
 .text-right {
   text-align: right;
 }
 
-/* line 119, ../scss/_mixins.scss */
 .alert-help, .alert-info, .alert-error, .alert-success {
   margin: 10px;
   padding: 5px 18px;
   border: 1px solid;
 }
 
-/* line 125, ../scss/_mixins.scss */
 .alert-help {
   border-color: #e8dc59;
   background: #ebe16f;
 }
 
-/* line 131, ../scss/_mixins.scss */
 .alert-info {
   border-color: #bfe4f4;
   background: #d5edf8;
 }
 
-/* line 137, ../scss/_mixins.scss */
 .alert-error {
   border-color: #f8cdce;
   background: #fbe3e4;
 }
 
-/* line 143, ../scss/_mixins.scss */
 .alert-success {
   border-color: #deeaae;
   background: #e6efc2;
@@ -773,7 +702,6 @@ probably best not to use it. I mean, were you going to anyway? */
 
 /*  Font Awesome styles
     ------------------------------------------------------- */
-/* line 43, ../scss/_fontawesome.scss */
 [class^="icon-"],
 [class*=" icon-"] {
   font-family: FontAwesome;
@@ -794,7 +722,6 @@ probably best not to use it. I mean, were you going to anyway? */
 }
 
 /* more sprites.less reset */
-/* line 75, ../scss/_fontawesome.scss */
 .icon-white,
 .nav-pills > .active > a > [class^="icon-"],
 .nav-pills > .active > a > [class*=" icon-"],
@@ -811,7 +738,6 @@ probably best not to use it. I mean, were you going to anyway? */
   background-image: none;
 }
 
-/* line 80, ../scss/_fontawesome.scss */
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
   text-decoration: inherit;
@@ -820,46 +746,39 @@ probably best not to use it. I mean, were you going to anyway? */
 }
 
 /* makes sure icons active on rollover in links */
-/* line 89, ../scss/_fontawesome.scss */
 a [class^="icon-"],
 a [class*=" icon-"] {
   display: inline-block;
 }
 
 /* makes the font 33% larger relative to the icon container */
-/* line 95, ../scss/_fontawesome.scss */
 .icon-large:before {
   vertical-align: -10%;
   font-size: 1.3333333333333333em;
 }
 
-/* line 102, ../scss/_fontawesome.scss */
 .btn [class^="icon-"],
 .btn [class*=" icon-"], .nav [class^="icon-"],
 .nav [class*=" icon-"] {
   display: inline;
   /* keeps button heights with and without icons the same */
 }
-/* line 105, ../scss/_fontawesome.scss */
 .btn [class^="icon-"].icon-large,
 .btn [class*=" icon-"].icon-large, .nav [class^="icon-"].icon-large,
 .nav [class*=" icon-"].icon-large {
   line-height: .9em;
 }
-/* line 106, ../scss/_fontawesome.scss */
 .btn [class^="icon-"].icon-spin,
 .btn [class*=" icon-"].icon-spin, .nav [class^="icon-"].icon-spin,
 .nav [class*=" icon-"].icon-spin {
   display: inline-block;
 }
 
-/* line 112, ../scss/_fontawesome.scss */
 .nav-tabs [class^="icon-"],
 .nav-tabs [class*=" icon-"], .nav-pills [class^="icon-"],
 .nav-pills [class*=" icon-"] {
   /* keeps button heights with and without icons the same */
 }
-/* line 114, ../scss/_fontawesome.scss */
 .nav-tabs [class^="icon-"], .nav-tabs [class^="icon-"].icon-large,
 .nav-tabs [class*=" icon-"],
 .nav-tabs [class*=" icon-"].icon-large, .nav-pills [class^="icon-"], .nav-pills [class^="icon-"].icon-large,
@@ -868,7 +787,6 @@ a [class*=" icon-"] {
   line-height: .9em;
 }
 
-/* line 120, ../scss/_fontawesome.scss */
 li [class^="icon-"],
 li [class*=" icon-"], .nav li [class^="icon-"],
 .nav li [class*=" icon-"] {
@@ -876,7 +794,6 @@ li [class*=" icon-"], .nav li [class^="icon-"],
   width: 1.25em;
   text-align: center;
 }
-/* line 124, ../scss/_fontawesome.scss */
 li [class^="icon-"].icon-large,
 li [class*=" icon-"].icon-large, .nav li [class^="icon-"].icon-large,
 .nav li [class*=" icon-"].icon-large {
@@ -884,36 +801,30 @@ li [class*=" icon-"].icon-large, .nav li [class^="icon-"].icon-large,
   width: 1.5625em;
 }
 
-/* line 131, ../scss/_fontawesome.scss */
 ul.icons {
   list-style-type: none;
   text-indent: -.75em;
 }
-/* line 137, ../scss/_fontawesome.scss */
 ul.icons li [class^="icon-"],
 ul.icons li [class*=" icon-"] {
   width: .75em;
 }
 
-/* line 143, ../scss/_fontawesome.scss */
 .icon-muted {
   color: #eeeeee;
 }
 
-/* line 150, ../scss/_fontawesome.scss */
 .icon-border {
   border: solid 1px #eeeeee;
-  padding: 0.2em 0.25em 0.15em;
+  padding: .2em .25em .15em;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
 
-/* line 159, ../scss/_fontawesome.scss */
 .icon-2x {
   font-size: 2em;
 }
-/* line 161, ../scss/_fontawesome.scss */
 .icon-2x.icon-border {
   border-width: 2px;
   -webkit-border-radius: 4px;
@@ -921,11 +832,9 @@ ul.icons li [class*=" icon-"] {
   border-radius: 4px;
 }
 
-/* line 166, ../scss/_fontawesome.scss */
 .icon-3x {
   font-size: 3em;
 }
-/* line 168, ../scss/_fontawesome.scss */
 .icon-3x.icon-border {
   border-width: 3px;
   -webkit-border-radius: 5px;
@@ -933,11 +842,9 @@ ul.icons li [class*=" icon-"] {
   border-radius: 5px;
 }
 
-/* line 173, ../scss/_fontawesome.scss */
 .icon-4x {
   font-size: 4em;
 }
-/* line 175, ../scss/_fontawesome.scss */
 .icon-4x.icon-border {
   border-width: 4px;
   -webkit-border-radius: 6px;
@@ -945,69 +852,57 @@ ul.icons li [class*=" icon-"] {
   border-radius: 6px;
 }
 
-/* line 185, ../scss/_fontawesome.scss */
 .pull-right {
   float: right;
 }
 
-/* line 186, ../scss/_fontawesome.scss */
 .pull-left {
   float: left;
 }
 
-/* line 190, ../scss/_fontawesome.scss */
 [class^="icon-"].pull-left,
 [class*=" icon-"].pull-left {
   margin-right: .3em;
 }
-/* line 193, ../scss/_fontawesome.scss */
 [class^="icon-"].pull-right,
 [class*=" icon-"].pull-right {
   margin-left: .3em;
 }
 
-/* line 202, ../scss/_fontawesome.scss */
 .btn [class^="icon-"].pull-left.icon-2x, .btn [class^="icon-"].pull-right.icon-2x,
 .btn [class*=" icon-"].pull-left.icon-2x,
 .btn [class*=" icon-"].pull-right.icon-2x {
   margin-top: .18em;
 }
-/* line 204, ../scss/_fontawesome.scss */
 .btn [class^="icon-"].icon-spin.icon-large,
 .btn [class*=" icon-"].icon-spin.icon-large {
   line-height: .8em;
 }
 
-/* line 212, ../scss/_fontawesome.scss */
 .btn.btn-small [class^="icon-"].pull-left.icon-2x, .btn.btn-small [class^="icon-"].pull-right.icon-2x,
 .btn.btn-small [class*=" icon-"].pull-left.icon-2x,
 .btn.btn-small [class*=" icon-"].pull-right.icon-2x {
   margin-top: .25em;
 }
 
-/* line 219, ../scss/_fontawesome.scss */
 .btn.btn-large [class^="icon-"],
 .btn.btn-large [class*=" icon-"] {
   margin-top: 0;
 }
-/* line 222, ../scss/_fontawesome.scss */
 .btn.btn-large [class^="icon-"].pull-left.icon-2x, .btn.btn-large [class^="icon-"].pull-right.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-left.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
   margin-top: .05em;
 }
-/* line 224, ../scss/_fontawesome.scss */
 .btn.btn-large [class^="icon-"].pull-left.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-left.icon-2x {
   margin-right: .2em;
 }
-/* line 225, ../scss/_fontawesome.scss */
 .btn.btn-large [class^="icon-"].pull-right.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
   margin-left: .2em;
 }
 
-/* line 230, ../scss/_fontawesome.scss */
 .icon-spin {
   display: inline-block;
   -moz-animation: spin 2s infinite linear;
@@ -1017,103 +912,85 @@ ul.icons li [class*=" icon-"] {
 }
 
 @-moz-keyframes spin {
-  /* line 239, ../scss/_fontawesome.scss */
   0% {
     -moz-transform: rotate(0deg);
   }
 
-  /* line 240, ../scss/_fontawesome.scss */
   100% {
     -moz-transform: rotate(359deg);
   }
 }
 
 @-webkit-keyframes spin {
-  /* line 243, ../scss/_fontawesome.scss */
   0% {
     -webkit-transform: rotate(0deg);
   }
 
-  /* line 244, ../scss/_fontawesome.scss */
   100% {
     -webkit-transform: rotate(359deg);
   }
 }
 
 @-o-keyframes spin {
-  /* line 247, ../scss/_fontawesome.scss */
   0% {
     -o-transform: rotate(0deg);
   }
 
-  /* line 248, ../scss/_fontawesome.scss */
   100% {
     -o-transform: rotate(359deg);
   }
 }
 
 @-ms-keyframes spin {
-  /* line 251, ../scss/_fontawesome.scss */
   0% {
     -ms-transform: rotate(0deg);
   }
 
-  /* line 252, ../scss/_fontawesome.scss */
   100% {
     -ms-transform: rotate(359deg);
   }
 }
 
 @keyframes spin {
-  /* line 255, ../scss/_fontawesome.scss */
   0% {
     transform: rotate(0deg);
   }
 
-  /* line 256, ../scss/_fontawesome.scss */
   100% {
     transform: rotate(359deg);
   }
 }
 
 @-moz-document url-prefix() {
-  /* line 260, ../scss/_fontawesome.scss */
   .icon-spin {
     height: .9em;
   }
 
-  /* line 261, ../scss/_fontawesome.scss */
   .btn .icon-spin {
     height: auto;
   }
 
-  /* line 262, ../scss/_fontawesome.scss */
   .icon-spin.icon-large {
     height: 1.25em;
   }
 
-  /* line 263, ../scss/_fontawesome.scss */
   .btn .icon-spin.icon-large {
     height: .75em;
   }
 }
 
-/* line 264, ../scss/_fontawesome.scss */
 .icon-facebook-sign:before {
   content: "\f021";
 }
 
-/* line 265, ../scss/_fontawesome.scss */
 .icon-facebook:before {
   content: "\f022";
 }
 
-/* line 10, ../../../../../../../../../Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/layout/_sticky-footer.scss */
 html, body {
   height: 100%;
 }
 
-/* line 12, ../../../../../../../../../Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/layout/_sticky-footer.scss */
 .wrapper {
   clear: both;
   min-height: 100%;
@@ -1121,19 +998,16 @@ html, body {
   height: 100%;
   margin-bottom: -80px;
 }
-/* line 18, ../../../../../../../../../Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/layout/_sticky-footer.scss */
 .wrapper .push {
   height: 80px;
 }
 
-/* line 20, ../../../../../../../../../Users/Mike/.rvm/gems/ruby-1.9.3-p374/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/layout/_sticky-footer.scss */
 .footer {
   clear: both;
   position: relative;
   height: 80px;
 }
 
-/* line 49, ../scss/style.scss */
 html, body {
   min-width: 960px;
   height: 100%;
@@ -1142,59 +1016,48 @@ html, body {
   font-weight: 200;
 }
 
-/* line 58, ../scss/style.scss */
 a {
   color: #7f6f54;
   text-decoration: none;
 }
-/* line 62, ../scss/style.scss */
 a:hover {
   color: #bfa67e;
   text-decoration: underline;
 }
 
-/* line 68, ../scss/style.scss */
 h1, h2, h3 {
   margin: 0 0 10px 0;
   font-weight: 400;
 }
 
-/* line 73, ../scss/style.scss */
 p {
   margin: 0.625em 0;
 }
 
-/* line 77, ../scss/style.scss */
 .dash-separator {
   color: #ffdda8;
 }
 
-/* line 81, ../scss/style.scss */
 .header {
   height: 9.4375em;
   background-color: #000000;
   border-bottom: 1px solid #7f6f54;
 }
-/* line 86, ../scss/style.scss */
 .header .header-info {
   font-size: 0.8125em;
   line-height: 1em;
 }
-/* line 90, ../scss/style.scss */
 .header .header-info p {
   margin: 0;
 }
-/* line 95, ../scss/style.scss */
 .header .header-facebook {
   font-size: 0.75em;
   line-height: 1em;
   margin: 0.625em 0;
 }
-/* line 101, ../scss/style.scss */
 .header #inner-header {
   position: relative;
 }
-/* line 105, ../scss/style.scss */
 .header .header-right {
   position: absolute;
   bottom: 0;
@@ -1203,37 +1066,30 @@ p {
   text-align: right;
   color: #ffffff;
 }
-/* line 114, ../scss/style.scss */
 .header .header-right a:hover {
   text-decoration: none;
 }
 
-/* line 120, ../scss/style.scss */
 ul.nav {
   list-style: none;
   margin: 0.625em 0 0 0;
 }
-/* line 124, ../scss/style.scss */
 ul.nav li {
   float: left;
   font-size: 1.25em;
   font-weight: 400;
 }
-/* line 129, ../scss/style.scss */
 ul.nav li:last-child > a .nav-divider {
   display: none;
 }
-/* line 134, ../scss/style.scss */
 ul.nav li > a:hover {
   text-decoration: none;
 }
-/* line 138, ../scss/style.scss */
 ul.nav li > a .nav-divider {
   padding: 0 0.1875em 0 0.1875em;
   color: #ffdda8;
 }
 
-/* line 147, ../scss/style.scss */
 .footer {
   background-color: #000000;
   color: #ffffff;
@@ -1241,146 +1097,120 @@ ul.nav li > a .nav-divider {
   line-height: 1em;
   border-top: 1px solid #7f6f54;
 }
-/* line 154, ../scss/style.scss */
 .footer #inner-footer {
   padding-top: 0.96875em;
 }
-/* line 158, ../scss/style.scss */
 .footer p {
   margin: 0;
 }
-/* line 162, ../scss/style.scss */
 .footer .contact-info {
   float: left;
 }
 
-/* line 167, ../scss/style.scss */
 .footer-social {
   height: 100%;
   float: right;
   font-size: 2.375em;
 }
 
-/* line 173, ../scss/style.scss */
 #container.wrapper {
-  background: url('../images/background-updated.png?1365775991') no-repeat center center fixed;
+  background: url('../images/background-updated.jpg?1374115605') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 
-/* line 178, ../scss/style.scss */
 #inner-header, .content-container, #inner-footer {
   width: 960px;
   margin: 0 auto;
 }
 
-/* line 182, ../scss/style.scss */
 .content-container {
   background-color: #ffffff;
   padding: 0.625em 0;
 }
 
-/* line 186, ../scss/style.scss */
 div.pp_details a.pp_close {
   right: 0;
 }
 
-/* line 190, ../scss/style.scss */
 div.pp_content a.pp_expand, div.pp_content a.pp_contract {
   left: 0;
 }
 
-/* line 1, ../scss/_home.scss */
 .flexslider {
   padding: 0 0.625em;
 }
 
-/* line 5, ../scss/_home.scss */
 .homepage-about {
   padding: 0.625em;
 }
 
-/* line 10, ../scss/_home.scss */
 .homepage-featured-panes a {
   float: left;
   padding: 0.625em;
 }
 
-/* line 1, ../scss/_about.scss */
 .about-details {
   padding: 0 0.625em;
   float: left;
   width: 40em;
 }
 
-/* line 7, ../scss/_about.scss */
 .about-image {
   float: left;
   width: 20em;
   padding: 0 0.625em;
 }
 
-/* line 13, ../scss/_about.scss */
 .about-panorama {
   padding: 1.25em 0.625em 0 0.625em;
   width: 100%;
   clear: both;
 }
 
-/* line 1, ../scss/_services.scss */
 .services-pane {
   width: 20em;
   margin-top: 0.625em;
   float: left;
 }
-/* line 6, ../scss/_services.scss */
 .services-pane ul {
   list-style-type: disc;
   list-style-position: inside;
 }
 
-/* line 13, ../scss/_services.scss */
 #services-content > div, #services-content h1 {
   padding: 0 10px;
 }
 
-/* line 1, ../scss/_contact.scss */
 .contact-details {
   padding: 0 0.625em;
   float: left;
   width: 20em;
 }
-/* line 7, ../scss/_contact.scss */
 .contact-details .employee {
   padding: 0.625em 0;
   border-top: 1px dashed #7f6f54;
 }
-/* line 11, ../scss/_contact.scss */
 .contact-details .employee:first-child {
   border-top: none;
   padding-top: 0;
 }
-/* line 16, ../scss/_contact.scss */
 .contact-details .employee p {
   margin: 0;
 }
-/* line 19, ../scss/_contact.scss */
 .contact-details .employee p.name {
   font-size: 2em;
 }
-/* line 23, ../scss/_contact.scss */
 .contact-details .employee p.title {
   font-style: italic;
 }
 
-/* line 30, ../scss/_contact.scss */
 span.separator {
   color: #7f6f54;
 }
 
-/* line 34, ../scss/_contact.scss */
 .facebook-inset {
   width: 75%;
   height: 3.6875em;
@@ -1391,116 +1221,103 @@ span.separator {
   border-radius: 6px;
   margin: 0.625em auto 0 auto;
 }
-/* line 42, ../scss/_contact.scss */
 .facebook-inset a {
   color: #bfa67e;
 }
-/* line 44, ../scss/_contact.scss */
 .facebook-inset a:hover {
   color: #7f6f54;
   text-decoration: none;
 }
-/* line 50, ../scss/_contact.scss */
 .facebook-inset span {
   font-size: 1.15em;
   display: block;
   margin: 0;
   line-height: 3.20652em;
 }
-/* line 56, ../scss/_contact.scss */
 .facebook-inset span .icon-facebook-sign {
   vertical-align: middle;
   font-size: 2em;
 }
 
-/* line 63, ../scss/_contact.scss */
 .contact-map-container {
   padding: 0 0.625em;
   float: left;
   width: 40em;
 }
-/* line 68, ../scss/_contact.scss */
 .contact-map-container .phone {
   font-size: 4em;
   font-weight: 200;
   text-shadow: 1px 1px 1px #7f6f54;
   margin: 0;
 }
-/* line 75, ../scss/_contact.scss */
 .contact-map-container .address {
   margin: 0;
   font-size: 1.5em;
   font-weight: 200;
 }
-/* line 81, ../scss/_contact.scss */
 .contact-map-container .hours {
   margin-top: 0;
 }
 
-/* line 86, ../scss/_contact.scss */
 .contact-map-wrap {
   height: 25em;
 }
-/* line 89, ../scss/_contact.scss */
 .contact-map-wrap #contact-map {
   width: 100%;
   height: 100%;
 }
 
-/* line 4, ../scss/_products.scss */
 .products.content-container {
   padding: 0.625em;
 }
 
-/* line 8, ../scss/_products.scss */
 .woocommerce-breadcrumb {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* line 14, ../scss/_products.scss */
 .single-product-main {
   margin-top: 0.625em;
 }
-/* line 17, ../scss/_products.scss */
 .single-product-main h1, .single-product-main h2, .single-product-main h3 {
   font-weight: 200;
 }
-/* line 21, ../scss/_products.scss */
 .single-product-main .onsale {
   color: red;
   font-size: 1.5em;
   font-weight: 400;
 }
-/* line 26, ../scss/_products.scss */
 .single-product-main .images {
   float: left;
   width: 50%;
 }
-/* line 31, ../scss/_products.scss */
 .single-product-main .summary {
   width: 50%;
   float: left;
   margin-bottom: 1.25em;
 }
-/* line 39, ../scss/_products.scss */
+.single-product-main p.price span.amount {
+  font-size: 1.25em;
+}
 .single-product-main p.price del span {
+  font-size: 1em;
   vertical-align: middle;
 }
-/* line 42, ../scss/_products.scss */
 .single-product-main p.price ins span {
   vertical-align: middle;
   font-weight: 400;
   color: red;
   font-size: 1.50em;
 }
-/* line 50, ../scss/_products.scss */
+.single-product-main div.summary ul {
+  list-style-type: disc;
+  margin-left: 1.125em;
+}
 .single-product-main .related.products {
   clear: both;
-  margin-top: 2.5em;
+  padding-top: 2.5em;
 }
-/* line 53, ../scss/_products.scss */
 .single-product-main .related.products ul.products li {
   width: 170px;
   height: 225px;
@@ -1510,92 +1327,78 @@ span.separator {
   margin-bottom: 0.625em;
   padding: 0 10px;
 }
-/* line 64, ../scss/_products.scss */
 .single-product-main .related.products ul.products li h3 {
   max-height: 4em;
   font-size: 1em;
   margin: 0;
   overflow: hidden;
 }
-/* line 71, ../scss/_products.scss */
 .single-product-main .related.products ul.products li:first-child {
   padding-left: 0;
 }
 
-/* line 80, ../scss/_products.scss */
 #products-content.products .sidebar {
   padding-right: 10px;
   float: left;
   width: 12em;
 }
-/* line 85, ../scss/_products.scss */
 #products-content.products .sidebar h4 {
   font-weight: 200;
   font-size: 1.5em;
   margin: 10px 0;
 }
-/* line 91, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories {
   font-size: 1.25em;
   margin: 0.625em 0;
 }
-/* line 95, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories li {
   border: 0 dashed #bfa67e;
   border-width: 1px 0 1px 0;
   margin: -1px 0;
   padding: 0.125em 0;
 }
-/* line 101, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories li a:hover {
   text-decoration: none;
 }
-/* line 106, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories .cat-item {
   font-weight: 200;
 }
-/* line 109, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories .cat-item .children {
   display: none;
 }
-/* line 115, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories .current-cat a {
   color: #bfa67e;
 }
-/* line 119, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories .current-cat .children a {
   color: #7f6f54;
 }
-/* line 124, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories .current-cat, #products-content.products .sidebar ul.product-categories .current-cat-parent {
   font-weight: 400;
 }
-/* line 127, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories .current-cat .children, #products-content.products .sidebar ul.product-categories .current-cat-parent .children {
   display: block;
 }
-/* line 132, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories ul.children {
   text-indent: 10px;
   margin: 0;
 }
-/* line 136, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories ul.children li {
   color: #7f6f54;
   font-size: .75em;
   border: none;
 }
-/* line 143, ../scss/_products.scss */
 #products-content.products .sidebar ul.product-categories ul.children li:hover {
   color: #bfa67e;
 }
-/* line 151, ../scss/_products.scss */
 #products-content.products .products-main {
   padding-left: 10px;
   float: right;
   width: 748px;
 }
-/* line 157, ../scss/_products.scss */
+#products-content.products .products-main .msrp-note {
+  font-size: 0.75em;
+  font-weight: bold;
+}
 #products-content.products .products-main .products .product {
   width: 170px;
   height: 225px;
@@ -1605,27 +1408,22 @@ span.separator {
   margin-bottom: 0.625em;
   padding: 0 10px;
 }
-/* line 168, ../scss/_products.scss */
 #products-content.products .products-main .products .product h3 {
   max-height: 4em;
   font-size: 1em;
   margin: 0;
   overflow: hidden;
 }
-/* line 178, ../scss/_products.scss */
 #products-content.products .woocommerce-pagination {
   text-align: center;
 }
-/* line 180, ../scss/_products.scss */
 #products-content.products .woocommerce-pagination ul.page-numbers {
   display: inline-block;
   font-size: 1.5em;
 }
-/* line 184, ../scss/_products.scss */
 #products-content.products .woocommerce-pagination ul.page-numbers li {
   float: left;
 }
-/* line 187, ../scss/_products.scss */
 #products-content.products .woocommerce-pagination ul.page-numbers li span, #products-content.products .woocommerce-pagination ul.page-numbers li a {
   padding: 5px;
   line-height: 1.10em;
@@ -1633,29 +1431,27 @@ span.separator {
   display: inline-block;
 }
 
-/* line 1, ../scss/_links.scss */
+.pp_pic_holder .ppt {
+  display: none !important;
+}
+
 #links-content {
   padding: 0.625em 0.625em 0 0.625em;
 }
-/* line 4, ../scss/_links.scss */
 #links-content .link {
   padding: 1.25em 0;
   border-bottom: 1px dashed #7f6f54;
 }
-/* line 7, ../scss/_links.scss */
 #links-content .link h2 {
   font-size: 1.25em;
 }
-/* line 11, ../scss/_links.scss */
 #links-content .link:last-child {
   border-bottom: none;
 }
-/* line 15, ../scss/_links.scss */
 #links-content .link-image {
   float: left;
   margin-right: 1.25em;
 }
-/* line 20, ../scss/_links.scss */
 #links-content .link-description {
   float: right;
   width: 748px;
@@ -1672,7 +1468,6 @@ span.separator {
  * Contributing author: Tyler Smith (@mbmufffin)
  */
 /* Browser Resets */
-/* line 17, ../scss/_flexslider.scss */
 .flex-container a:active,
 .flexslider a:active,
 .flex-container a:focus,
@@ -1680,7 +1475,6 @@ span.separator {
   outline: none;
 }
 
-/* line 20, ../scss/_flexslider.scss */
 .slides,
 .flex-control-nav,
 .flex-direction-nav {
@@ -1691,31 +1485,26 @@ span.separator {
 
 /* FlexSlider Necessary Styles
 *********************************/
-/* line 24, ../scss/_flexslider.scss */
 .flexslider {
   margin: 0;
 }
 
-/* line 25, ../scss/_flexslider.scss */
 .flexslider .slides > li {
   display: none;
   -webkit-backface-visibility: hidden;
 }
 
 /* Hide the slides before the JS is loaded. Avoids image jumping */
-/* line 26, ../scss/_flexslider.scss */
 .flexslider .slides img {
   width: 100%;
   display: block;
 }
 
-/* line 27, ../scss/_flexslider.scss */
 .flex-pauseplay span {
   text-transform: capitalize;
 }
 
 /* Clearfix for the .slides element */
-/* line 30, ../scss/_flexslider.scss */
 .slides:after {
   content: ".";
   display: block;
@@ -1725,12 +1514,10 @@ span.separator {
   height: 0;
 }
 
-/* line 31, ../scss/_flexslider.scss */
 html[xmlns] .slides {
   display: block;
 }
 
-/* line 32, ../scss/_flexslider.scss */
 * html .slides {
   height: 1%;
 }
@@ -1738,14 +1525,12 @@ html[xmlns] .slides {
 /* No JavaScript Fallback */
 /* If you are not using another script, such as Modernizr, make sure you
  * include js that eliminates this class on page load */
-/* line 37, ../scss/_flexslider.scss */
 .no-js .slides > li:first-child {
   display: block;
 }
 
 /* FlexSlider Default Theme
 *********************************/
-/* line 42, ../scss/_flexslider.scss */
 .flexslider {
   margin: 0 0 10px;
   background: #fff;
@@ -1753,7 +1538,6 @@ html[xmlns] .slides {
   zoom: 1;
 }
 
-/* line 43, ../scss/_flexslider.scss */
 .flex-viewport {
   max-height: 2000px;
   -webkit-transition: all 1s ease;
@@ -1761,28 +1545,23 @@ html[xmlns] .slides {
   transition: all 1s ease;
 }
 
-/* line 44, ../scss/_flexslider.scss */
 .loading .flex-viewport {
   max-height: 300px;
 }
 
-/* line 45, ../scss/_flexslider.scss */
 .flexslider .slides {
   zoom: 1;
 }
 
-/* line 47, ../scss/_flexslider.scss */
 .carousel li {
   margin-right: 5px;
 }
 
 /* Direction Nav */
-/* line 51, ../scss/_flexslider.scss */
 .flex-direction-nav {
   *height: 0;
 }
 
-/* line 52, ../scss/_flexslider.scss */
 .flex-direction-nav a {
   width: 30px;
   height: 30px;
@@ -1795,46 +1574,39 @@ html[xmlns] .slides {
   cursor: pointer;
   text-indent: -9999px;
   opacity: 0;
-  -webkit-transition: all 0.3s ease;
+  -webkit-transition: all .3s ease;
 }
 
-/* line 53, ../scss/_flexslider.scss */
 .flex-direction-nav .flex-next {
   background-position: 100% 0;
   right: -36px;
 }
 
-/* line 54, ../scss/_flexslider.scss */
 .flex-direction-nav .flex-prev {
   left: -36px;
 }
 
-/* line 55, ../scss/_flexslider.scss */
 .flexslider:hover .flex-next {
   opacity: 0.8;
   right: 15px;
 }
 
-/* line 56, ../scss/_flexslider.scss */
 .flexslider:hover .flex-prev {
   opacity: 0.8;
   left: 15px;
 }
 
-/* line 57, ../scss/_flexslider.scss */
 .flexslider:hover .flex-next:hover, .flexslider:hover .flex-prev:hover {
   opacity: 1;
 }
 
-/* line 58, ../scss/_flexslider.scss */
 .flex-direction-nav .flex-disabled {
-  opacity: .3!important;
+  opacity: 0.3 !important;
   filter: alpha(opacity=30);
   cursor: default;
 }
 
 /* Control Nav */
-/* line 61, ../scss/_flexslider.scss */
 .flex-control-nav {
   width: 100%;
   position: absolute;
@@ -1842,7 +1614,6 @@ html[xmlns] .slides {
   text-align: left;
 }
 
-/* line 62, ../scss/_flexslider.scss */
 .flex-control-nav li {
   margin: 0 6px;
   display: inline-block;
@@ -1850,7 +1621,6 @@ html[xmlns] .slides {
   *display: inline;
 }
 
-/* line 63, ../scss/_flexslider.scss */
 .flex-control-paging li a {
   width: 11px;
   height: 11px;
@@ -1866,34 +1636,29 @@ html[xmlns] .slides {
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
-/* line 64, ../scss/_flexslider.scss */
 .flex-control-paging li a:hover {
   background: #333;
   background: rgba(0, 0, 0, 0.7);
 }
 
-/* line 65, ../scss/_flexslider.scss */
 .flex-control-paging li a.flex-active {
   background: #000;
   background: rgba(0, 0, 0, 0.9);
   cursor: default;
 }
 
-/* line 67, ../scss/_flexslider.scss */
 .flex-control-thumbs {
   margin: 5px 0 0;
   position: static;
   overflow: hidden;
 }
 
-/* line 68, ../scss/_flexslider.scss */
 .flex-control-thumbs li {
   width: 25%;
   float: left;
   margin: 0;
 }
 
-/* line 69, ../scss/_flexslider.scss */
 .flex-control-thumbs img {
   width: 100%;
   display: block;
@@ -1901,25 +1666,21 @@ html[xmlns] .slides {
   cursor: pointer;
 }
 
-/* line 70, ../scss/_flexslider.scss */
 .flex-control-thumbs img:hover {
   opacity: 1;
 }
 
-/* line 71, ../scss/_flexslider.scss */
 .flex-control-thumbs .flex-active {
   opacity: 1;
   cursor: default;
 }
 
 @media screen and (max-width: 860px) {
-  /* line 74, ../scss/_flexslider.scss */
   .flex-direction-nav .flex-prev {
     opacity: 1;
     left: 0;
   }
 
-  /* line 75, ../scss/_flexslider.scss */
   .flex-direction-nav .flex-next {
     opacity: 1;
     right: 0;

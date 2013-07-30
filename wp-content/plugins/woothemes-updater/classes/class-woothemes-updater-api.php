@@ -118,6 +118,9 @@ class WooThemes_Updater_API {
 			}
 		}
 
+		// Pass if this is a network install on all requests
+		$url = add_query_arg( 'network', is_multisite() ? 1 : 0, $url );
+
 		$response = wp_remote_get( $url, array(
 			'method' => 'GET',
 			'timeout' => 45,
@@ -142,6 +145,9 @@ class WooThemes_Updater_API {
 			$error = esc_html( $data->error );
 			$error = '<strong>' . $error . '</strong>';
 			if ( isset( $data->additional_info ) ) { $error .= '<br /><br />' . esc_html( $data->additional_info ); }
+			$this->log_request_error( $error );
+		}elseif ( empty( $data ) ) {
+			$error = '<strong>There was an error making your request, please try again.</strong>';
 			$this->log_request_error( $error );
 		}
 

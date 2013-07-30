@@ -3,7 +3,7 @@
  * Plugin Name: WooCommerce
  * Plugin URI: http://www.woothemes.com/woocommerce/
  * Description: An e-commerce toolkit that helps you sell anything. Beautifully.
- * Version: 2.0.7
+ * Version: 2.0.12
  * Author: WooThemes
  * Author URI: http://woothemes.com
  * Requires at least: 3.5
@@ -37,7 +37,7 @@ class Woocommerce {
 	/**
 	 * @var string
 	 */
-	public $version = '2.0.7';
+	public $version = '2.0.12';
 
 	/**
 	 * @var string
@@ -168,7 +168,7 @@ class Woocommerce {
 
 		$plugin_links = array(
 			'<a href="' . admin_url( 'admin.php?page=woocommerce_settings' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
-			'<a href="http://docs.woothemes.com/">' . __( 'Docs', 'woocommerce' ) . '</a>',
+			'<a href="http://docs.woothemes.com/documentation/plugins/woocommerce/">' . __( 'Docs', 'woocommerce' ) . '</a>',
 			'<a href="http://support.woothemes.com/">' . __( 'Premium Support', 'woocommerce' ) . '</a>',
 		);
 
@@ -1160,7 +1160,7 @@ class Woocommerce {
 
 		// Register any scripts for later use, or used as dependencies
 		wp_register_script( 'chosen', $this->plugin_url() . '/assets/js/chosen/chosen.jquery' . $suffix . '.js', array( 'jquery' ), '0.9.11', true );
-		wp_register_script( 'jquery-blockui', $this->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.50', true );
+		wp_register_script( 'jquery-blockui', $this->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.60', true );
 		wp_register_script( 'jquery-placeholder', $this->plugin_url() . '/assets/js/jquery-placeholder/jquery.placeholder' . $suffix . '.js', array( 'jquery' ), $this->version, true );
 
 		wp_register_script( 'wc-add-to-cart-variation', $frontend_script_path . 'add-to-cart-variation' . $suffix . '.js', array( 'jquery' ), $this->version, true );
@@ -1215,7 +1215,6 @@ class Woocommerce {
 			'checkout_url'                     => add_query_arg( 'action', 'woocommerce-checkout', $this->ajax_url() ),
 			'is_checkout'                      => is_page( woocommerce_get_page_id( 'checkout' ) ) ? 1 : 0,
 			'update_shipping_method_nonce'     => wp_create_nonce( "update-shipping-method" ),
-			'add_to_cart_nonce'                => wp_create_nonce( "add-to-cart" ),
 			'cart_url'                         => get_permalink( woocommerce_get_page_id( 'cart' ) ),
 			'cart_redirect_after_add'          => get_option( 'woocommerce_cart_redirect_after_add' )
 		);
@@ -1249,7 +1248,7 @@ class Woocommerce {
 		global $wp_scripts;
 
 		// Enforce minimum version of jQuery
-		if ( isset( $wp_scripts->registered['jquery']->ver ) && $wp_scripts->registered['jquery']->ver < '1.7' ) {
+		if ( ! empty( $wp_scripts->registered['jquery']->ver ) && ! empty( $wp_scripts->registered['jquery']->src ) && $wp_scripts->registered['jquery']->ver < '1.7' ) {
 			wp_deregister_script( 'jquery' );
 			wp_register_script( 'jquery', '/wp-includes/js/jquery/jquery.js', array(), '1.7' );
 			wp_enqueue_script( 'jquery' );
@@ -1629,7 +1628,7 @@ class Woocommerce {
 		if ( strstr( $name, 'pa_' ) ) {
 			$name = woocommerce_sanitize_taxonomy_name( str_replace( 'pa_', '', $name ) );
 
-			$label = $wpdb->get_var( $wpdb->prepare( "SELECT attribute_label FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = %s;", $name ) );
+			$label = $wpdb->get_var( $wpdb->prepare( "SELECT attribute_label FROM {$wpdb->prefix}woocommerce_attribute_taxonomies WHERE attribute_name = %s;", $name ) );
 
 			if ( ! $label )
 				$label = ucfirst( $name );

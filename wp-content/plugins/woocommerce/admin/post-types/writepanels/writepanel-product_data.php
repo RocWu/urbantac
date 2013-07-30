@@ -348,11 +348,12 @@ function woocommerce_product_data_box() {
 				    		$attribute_taxonomy_name = $woocommerce->attribute_taxonomy_name( $tax->attribute_name );
 
 				    		// Ensure it exists
-				    		if ( ! taxonomy_exists( $attribute_taxonomy_name ) ) continue;
+				    		if ( ! taxonomy_exists( $attribute_taxonomy_name ) )
+				    			continue;
 
 				    		// Get product data values for current taxonomy - this contains ordering and visibility data
-				    		if ( isset( $attributes[ $attribute_taxonomy_name ] ) )
-				    			$attribute = $attributes[ $attribute_taxonomy_name ];
+				    		if ( isset( $attributes[ sanitize_title( $attribute_taxonomy_name ) ] ) )
+				    			$attribute = $attributes[ sanitize_title( $attribute_taxonomy_name ) ];
 
 				    		$position = empty( $attribute['position'] ) ? 0 : absint( $attribute['position'] );
 
@@ -387,7 +388,7 @@ function woocommerce_product_data_box() {
 							        					$all_terms = get_terms( $attribute_taxonomy_name, 'orderby=name&hide_empty=0' );
 						        						if ( $all_terms ) {
 							        						foreach ( $all_terms as $term ) {
-							        							$has_term = has_term( $term->term_id, $attribute_taxonomy_name, $thepostid ) ? 1 : 0;
+							        							$has_term = has_term( (int) $term->term_id, $attribute_taxonomy_name, $thepostid ) ? 1 : 0;
 							        							echo '<option value="' . esc_attr( $term->slug ) . '" ' . selected( $has_term, 1, false ) . '>' . $term->name . '</option>';
 															}
 														}
@@ -546,7 +547,8 @@ function woocommerce_product_data_box() {
 							$product      = get_product( $product_id );
 							$product_name = woocommerce_get_formatted_product_name( $product );
 
-							echo '<option value="' . esc_attr( $product_id ) . '" selected="selected">' . esc_html( $product_name ) . '</option>';
+							if ( $product )
+								echo '<option value="' . esc_attr( $product_id ) . '" selected="selected">' . esc_html( $product_name ) . '</option>';
 						}
 					}
 				?>
@@ -749,12 +751,13 @@ function woocommerce_process_product_meta( $post_id, $post ) {
 
 				if ( isset( $attribute_values[ $i ] ) ) {
 
-			 		// Format values (posted values are slugs)
+			 		// Select based attributes - Format values (posted values are slugs)
 			 		if ( is_array( $attribute_values[ $i ] ) ) {
 				 		$values = array_map( 'sanitize_title', $attribute_values[ $i ] );
+
+				 	// Text based attributes - Posted values are term names - don't change to slugs
 				 	} else {
-				 		// Text based, separate by pipe
-				 		$values = array_map( 'sanitize_title', explode( '|', $attribute_values[ $i ] ) );
+				 		$values = array_map( 'stripslashes', array_map( 'strip_tags', explode( '|', $attribute_values[ $i ] ) ) );
 				 	}
 
 				 	// Remove empty items in the array
