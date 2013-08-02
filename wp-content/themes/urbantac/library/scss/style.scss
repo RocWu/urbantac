@@ -130,6 +130,11 @@ ul.nav {
         display: none;
       }
 
+
+      &.current-menu-item a {
+        color: $hoverLinkColor;
+      }
+
       & > a {
         &:hover {
           text-decoration: none;
