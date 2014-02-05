@@ -31,9 +31,12 @@ Template Name: Contact Page
         <div class="contact-map-container clearfix">
           <p class="phone"><span itemprop="telephone">774.302.0130</span></p>
           <p itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" class="address"><span itemprop="streetAddress">260 Main Street</span>, <span itemprop="addressLocality">Buzzards Bay</span>, <span itemprop="addressRegion">Massachusetts</span> <span itemprop="postalCode">02532</span></p>
-          <p class="hours">Tuesday - Friday 9:00am-5:00pm <span class="separator">/</span> Saturday 9:00am-1:00pm</p>
-          <meta itemprop="openingHours" content="Tu-Fr 09:00-17:00">
-          <meta itemprop="openingHours" content="Sa 11:00-13:00">
+          <p class="hours">
+            <time itemprop="openingHours" datetime="Tu-We 10:00-18:00">Tuesday-Wednesday 10am-6pm</time><br />
+            <time itemprop="openingHours" datetime="Th-Fr 10:00-19:00">Thursday-Friday 10am-7pm</time><br />
+            <time itemprop="openingHours" datetime="Sa 9:00-17:00">Saturday 9am-5pm</time>
+          </p>
+
           <div class="contact-map-wrap">
             <div id="contact-map"></div>
           </div>
